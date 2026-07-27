@@ -2,7 +2,7 @@
 
 > From Understanding Humans → To Guiding Them
 
-This project is part of the ArvyaX ML Internship Assignment.
+
 
 ## 🚀 Overview
 
