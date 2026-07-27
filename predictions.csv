@@ -1,0 +1,121 @@
+id,predicted_state,predicted_intensity,confidence,uncertain_flag,what_to_do,when_to_do,support_message
+10001,focused,3,0.7981282,0,sound_therapy,tonight,You seem a bit focused. A small step can help improve your state.
+10002,mixed,5,0.5757781,1,rest,now,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10003,calm,5,0.28955194,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10004,focused,5,0.8558027,0,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10005,neutral,4,0.5313292,1,rest,now,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10006,mixed,4,0.6013981,0,light_planning,later_today,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10007,restless,1,0.61301124,0,rest,now,You seem stable. You can continue your current flow.
+10008,overwhelmed,3,0.5485583,1,rest,now,You seem a bit overwhelmed. A small step can help improve your state.
+10009,restless,4,0.88390875,0,grounding,within_15_min,You seem quite restless. Let's take a moment to reset with a focused activity.
+10010,overwhelmed,2,0.64295214,0,sound_therapy,tonight,You seem stable. You can continue your current flow.
+10011,overwhelmed,4,0.34169313,1,box_breathing,now,You seem quite overwhelmed. Let's take a moment to reset with a focused activity.
+10012,restless,4,0.42461416,1,grounding,within_15_min,You seem quite restless. Let's take a moment to reset with a focused activity.
+10013,mixed,4,0.30683228,1,light_planning,later_today,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10014,focused,3,0.8136737,0,rest,now,You seem a bit focused. A small step can help improve your state.
+10015,calm,3,0.69755363,0,light_planning,later_today,You seem a bit calm. A small step can help improve your state.
+10016,neutral,5,0.84241223,0,light_planning,later_today,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10017,mixed,1,0.93016106,0,rest,now,You seem stable. You can continue your current flow.
+10018,mixed,2,0.9014596,0,light_planning,later_today,You seem stable. You can continue your current flow.
+10019,focused,2,0.6392605,0,light_planning,later_today,You seem stable. You can continue your current flow.
+10020,calm,4,0.27247477,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10021,overwhelmed,3,0.79532874,0,rest,now,You seem a bit overwhelmed. A small step can help improve your state.
+10022,calm,1,0.6390635,0,light_planning,later_today,You seem stable. You can continue your current flow.
+10023,neutral,1,0.33418822,1,rest,now,You seem stable. You can continue your current flow.
+10024,neutral,1,0.581014,1,rest,now,You seem stable. You can continue your current flow.
+10025,calm,4,0.31297734,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10026,overwhelmed,3,0.81281894,0,light_planning,later_today,You seem a bit overwhelmed. A small step can help improve your state.
+10027,calm,1,0.21051677,1,rest,now,You seem stable. You can continue your current flow.
+10028,overwhelmed,3,0.28171033,1,rest,now,You seem a bit overwhelmed. A small step can help improve your state.
+10029,overwhelmed,3,0.8234221,0,light_planning,later_today,You seem a bit overwhelmed. A small step can help improve your state.
+10030,mixed,1,0.43495935,1,rest,now,You seem stable. You can continue your current flow.
+10031,focused,4,0.8373048,0,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10032,restless,3,0.46772408,1,movement,within_15_min,You seem a bit restless. A small step can help improve your state.
+10033,overwhelmed,5,0.7999998,0,box_breathing,now,You seem quite overwhelmed. Let's take a moment to reset with a focused activity.
+10034,neutral,5,0.74248445,0,rest,now,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10035,focused,4,0.93155116,0,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10036,restless,3,0.8600423,0,movement,within_15_min,You seem a bit restless. A small step can help improve your state.
+10037,overwhelmed,1,0.4457532,1,light_planning,later_today,You seem stable. You can continue your current flow.
+10038,focused,2,0.81610423,0,sound_therapy,tonight,You seem stable. You can continue your current flow.
+10039,mixed,1,0.65039104,0,rest,now,You seem stable. You can continue your current flow.
+10040,mixed,3,0.94097364,0,rest,now,You seem a bit mixed. A small step can help improve your state.
+10041,overwhelmed,5,0.7208391,0,box_breathing,now,You seem quite overwhelmed. Let's take a moment to reset with a focused activity.
+10042,mixed,5,0.4021767,1,rest,now,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10043,calm,5,0.6436568,0,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10044,calm,3,0.5005423,1,light_planning,later_today,You seem a bit calm. A small step can help improve your state.
+10045,restless,5,0.48105812,1,grounding,within_15_min,You seem quite restless. Let's take a moment to reset with a focused activity.
+10046,focused,2,0.9087055,0,sound_therapy,tonight,You seem stable. You can continue your current flow.
+10047,focused,1,0.5801735,1,light_planning,later_today,You seem stable. You can continue your current flow.
+10048,mixed,4,0.35559905,1,light_planning,later_today,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10049,restless,3,0.6561598,0,movement,within_15_min,You seem a bit restless. A small step can help improve your state.
+10050,restless,2,0.8762348,0,movement,within_15_min,You seem stable. You can continue your current flow.
+10051,calm,3,0.2734479,1,light_planning,later_today,You seem a bit calm. A small step can help improve your state.
+10052,restless,3,0.5098535,1,movement,within_15_min,You seem a bit restless. A small step can help improve your state.
+10053,calm,5,0.73054266,0,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10054,overwhelmed,4,0.8419279,0,box_breathing,now,You seem quite overwhelmed. Let's take a moment to reset with a focused activity.
+10055,mixed,5,0.91465056,0,light_planning,later_today,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10056,focused,4,0.9141058,0,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10057,overwhelmed,3,0.83503,0,rest,now,You seem a bit overwhelmed. A small step can help improve your state.
+10058,overwhelmed,4,0.56541204,1,box_breathing,now,You seem quite overwhelmed. Let's take a moment to reset with a focused activity.
+10059,mixed,3,0.81843615,0,light_planning,later_today,You seem a bit mixed. A small step can help improve your state.
+10060,calm,1,0.3045274,1,rest,now,You seem stable. You can continue your current flow.
+10061,calm,4,0.46148062,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10062,restless,1,0.27783573,1,movement,within_15_min,You seem stable. You can continue your current flow.
+10063,mixed,5,0.5490484,1,rest,now,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10064,neutral,3,0.23515946,1,rest,now,You seem a bit neutral. A small step can help improve your state.
+10065,neutral,5,0.7760784,0,light_planning,later_today,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10066,restless,1,0.7723183,0,rest,now,You seem stable. You can continue your current flow.
+10067,restless,5,0.6152723,0,grounding,within_15_min,You seem quite restless. Let's take a moment to reset with a focused activity.
+10068,overwhelmed,3,0.7412257,0,light_planning,later_today,You seem a bit overwhelmed. A small step can help improve your state.
+10069,neutral,3,0.68339103,0,light_planning,later_today,You seem a bit neutral. A small step can help improve your state.
+10070,restless,1,0.54609066,1,movement,within_15_min,You seem stable. You can continue your current flow.
+10071,calm,4,0.29614687,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10072,neutral,4,0.6112754,0,light_planning,later_today,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10073,restless,2,0.570341,1,rest,now,You seem stable. You can continue your current flow.
+10074,mixed,2,0.9126097,0,light_planning,later_today,You seem stable. You can continue your current flow.
+10075,restless,4,0.40379685,1,grounding,within_15_min,You seem quite restless. Let's take a moment to reset with a focused activity.
+10076,mixed,3,0.84105915,0,rest,now,You seem a bit mixed. A small step can help improve your state.
+10077,neutral,4,0.71813667,0,rest,now,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10078,restless,5,0.72213715,0,grounding,within_15_min,You seem quite restless. Let's take a moment to reset with a focused activity.
+10079,restless,1,0.63881516,0,rest,now,You seem stable. You can continue your current flow.
+10080,focused,4,0.29654962,1,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10081,restless,2,0.9054415,0,rest,now,You seem stable. You can continue your current flow.
+10082,mixed,2,0.25314182,1,light_planning,later_today,You seem stable. You can continue your current flow.
+10083,neutral,4,0.3615147,1,light_planning,later_today,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10084,overwhelmed,3,0.9104196,0,rest,now,You seem a bit overwhelmed. A small step can help improve your state.
+10085,calm,3,0.33860794,1,rest,now,You seem a bit calm. A small step can help improve your state.
+10086,restless,3,0.23100646,1,movement,within_15_min,You seem a bit restless. A small step can help improve your state.
+10087,mixed,2,0.87724006,0,light_planning,later_today,You seem stable. You can continue your current flow.
+10088,neutral,5,0.584705,1,light_planning,later_today,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10089,calm,5,0.6685988,0,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10090,mixed,1,0.2587888,1,light_planning,later_today,You seem stable. You can continue your current flow.
+10091,neutral,5,0.8311255,0,light_planning,later_today,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10092,overwhelmed,4,0.47151974,1,box_breathing,now,You seem quite overwhelmed. Let's take a moment to reset with a focused activity.
+10093,mixed,4,0.7930321,0,rest,now,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10094,focused,4,0.61660725,0,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10095,overwhelmed,3,0.5559275,1,sound_therapy,tonight,You seem a bit overwhelmed. A small step can help improve your state.
+10096,focused,4,0.358811,1,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10097,neutral,1,0.2592881,1,light_planning,later_today,You seem stable. You can continue your current flow.
+10098,overwhelmed,2,0.7877797,0,rest,now,You seem stable. You can continue your current flow.
+10099,mixed,1,0.8994414,0,rest,now,You seem stable. You can continue your current flow.
+10100,mixed,2,0.6173476,0,light_planning,later_today,You seem stable. You can continue your current flow.
+10101,mixed,1,0.30180526,1,rest,now,You seem stable. You can continue your current flow.
+10102,overwhelmed,2,0.6532399,0,light_planning,later_today,You seem stable. You can continue your current flow.
+10103,calm,4,0.7867272,0,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10104,mixed,2,0.6448486,0,rest,now,You seem stable. You can continue your current flow.
+10105,calm,4,0.5123968,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10106,neutral,5,0.7414909,0,light_planning,later_today,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10107,calm,4,0.27930576,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10108,calm,4,0.28709722,1,deep_work,now,You seem quite calm. Let's take a moment to reset with a focused activity.
+10109,neutral,3,0.6308106,0,light_planning,later_today,You seem a bit neutral. A small step can help improve your state.
+10110,calm,1,0.44937503,1,rest,now,You seem stable. You can continue your current flow.
+10111,mixed,4,0.39245462,1,rest,now,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10112,mixed,3,0.9021973,0,rest,now,You seem a bit mixed. A small step can help improve your state.
+10113,calm,3,0.65877223,0,rest,now,You seem a bit calm. A small step can help improve your state.
+10114,neutral,2,0.44610888,1,light_planning,later_today,You seem stable. You can continue your current flow.
+10115,calm,3,0.9073556,0,light_planning,later_today,You seem a bit calm. A small step can help improve your state.
+10116,overwhelmed,1,0.7382769,0,sound_therapy,tonight,You seem stable. You can continue your current flow.
+10117,neutral,5,0.84759426,0,rest,now,You seem quite neutral. Let's take a moment to reset with a focused activity.
+10118,focused,5,0.8041035,0,deep_work,now,You seem quite focused. Let's take a moment to reset with a focused activity.
+10119,mixed,4,0.5637323,1,light_planning,later_today,You seem quite mixed. Let's take a moment to reset with a focused activity.
+10120,mixed,5,0.6788867,0,light_planning,later_today,You seem quite mixed. Let's take a moment to reset with a focused activity.
