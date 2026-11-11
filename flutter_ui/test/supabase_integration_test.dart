@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:emotional_ui/main.dart';
 import 'package:emotional_ui/models/check_in_record.dart';
@@ -65,6 +66,15 @@ void main() {
     expect(find.text('How are you, really?'), findsOneWidget);
     expect(find.text('Save to history'), findsNothing);
     expect(find.bySemanticsLabel('Sign in'), findsNothing);
+    expect(find.bySemanticsLabel('Cloud sync is off'), findsOneWidget);
+
+    // The header button explains why cloud features are missing.
+    await tester.tap(find.bySemanticsLabel('Cloud sync is off'));
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(find.text('Cloud sync is off'), findsOneWidget);
+    expect(find.textContaining('without a Supabase key'), findsOneWidget);
+    Navigator.of(tester.element(find.text('Cloud sync is off'))).pop();
+    await tester.pump(const Duration(milliseconds: 600));
 
     await tester.tap(find.text('Insights'));
     await tester.pump(const Duration(milliseconds: 600));

@@ -57,11 +57,7 @@ class _OfflineInfo extends StatelessWidget {
       children: [
         Text('Cloud sync is off', style: context.text.headlineSmall),
         const SizedBox(height: EmoSpace.xs),
-        Text(
-          'This build has no Supabase key, so check-ins stay on this device and are not saved. '
-          'Run the app with --dart-define-from-file=supabase.json to enable accounts and history.',
-          style: context.text.bodyMedium,
-        ),
+        Text(Backend.offlineReason, style: context.text.bodyMedium),
       ],
     );
   }
