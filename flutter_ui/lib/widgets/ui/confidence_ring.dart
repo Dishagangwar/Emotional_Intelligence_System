@@ -1,5 +1,7 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 
 /// Animated circular gauge showing model confidence (0–1).
@@ -39,7 +41,9 @@ class ConfidenceRing extends StatelessWidget {
               painter: _RingPainter(
                 value: v,
                 color: color,
-                track: p.isDark ? Colors.white.withValues(alpha: 0.07) : Colors.black.withValues(alpha: 0.06),
+                track: p.isDark
+                    ? Colors.white.withValues(alpha: 0.07)
+                    : Colors.black.withValues(alpha: 0.06),
                 stroke: stroke,
               ),
               child: Center(
@@ -49,18 +53,23 @@ class ConfidenceRing extends StatelessWidget {
                     children: [
                       Text(
                         '${(v * 100).round()}%',
-                        style: context.text.titleLarge?.copyWith(
-                          fontSize: size * 0.22,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: -0.5,
-                          height: 1,
-                        ).tabular,
+                        style: context.text.titleLarge
+                            ?.copyWith(
+                              fontSize: size * 0.22,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: -0.5,
+                              height: 1,
+                            )
+                            .tabular,
                       ),
                       if (size >= 72) ...[
                         const SizedBox(height: 3),
                         Text(
                           caption,
-                          style: context.text.labelSmall?.copyWith(fontSize: 10, letterSpacing: 0.2),
+                          style: context.text.labelSmall?.copyWith(
+                            fontSize: 10,
+                            letterSpacing: 0.2,
+                          ),
                         ),
                       ],
                     ],
@@ -81,7 +90,12 @@ class _RingPainter extends CustomPainter {
   final Color track;
   final double stroke;
 
-  _RingPainter({required this.value, required this.color, required this.track, required this.stroke});
+  _RingPainter({
+    required this.value,
+    required this.color,
+    required this.track,
+    required this.stroke,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -111,17 +125,14 @@ class _RingPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = stroke
         ..strokeCap = StrokeCap.round
-        ..shader = SweepGradient(
-          startAngle: 0,
-          endAngle: math.pi * 2,
-          transform: const GradientRotation(start),
-          colors: [color.withValues(alpha: 0.55), color],
-          stops: [0, value.clamp(0.01, 1.0)],
-        ).createShader(rect),
+        ..color = color,
     );
   }
 
   @override
   bool shouldRepaint(_RingPainter old) =>
-      old.value != value || old.color != color || old.track != track || old.stroke != stroke;
+      old.value != value ||
+      old.color != color ||
+      old.track != track ||
+      old.stroke != stroke;
 }

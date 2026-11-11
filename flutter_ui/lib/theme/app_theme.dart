@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
+
 import 'emo_palette.dart';
 import 'emo_tokens.dart';
 import 'emo_typography.dart';
@@ -16,19 +17,20 @@ abstract final class AppTheme {
 
   static ThemeData _build(EmoPalette p) {
     final textTheme = EmoTypography.textTheme(p);
-    final scheme = ColorScheme.fromSeed(
-      seedColor: p.brand,
-      brightness: p.brightness,
-    ).copyWith(
-      primary: p.brand,
-      onPrimary: p.onAccent,
-      surface: p.surface,
-      onSurface: p.textPrimary,
-      onSurfaceVariant: p.textSecondary,
-      outline: p.borderStrong,
-      outlineVariant: p.border,
-      error: p.danger,
-    );
+    final scheme =
+        ColorScheme.fromSeed(
+          seedColor: p.brand,
+          brightness: p.brightness,
+        ).copyWith(
+          primary: p.brand,
+          onPrimary: p.onAccent,
+          surface: p.surface,
+          onSurface: p.textPrimary,
+          onSurfaceVariant: p.textSecondary,
+          outline: p.borderStrong,
+          outlineVariant: p.border,
+          error: p.danger,
+        );
 
     return ThemeData(
       useMaterial3: true,
@@ -51,11 +53,15 @@ abstract final class AppTheme {
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: p.surface,
         surfaceTintColor: Colors.transparent,
-        modalBarrierColor: Colors.black.withValues(alpha: p.isDark ? 0.55 : 0.3),
+        modalBarrierColor: Colors.black.withValues(
+          alpha: p.isDark ? 0.55 : 0.3,
+        ),
         showDragHandle: true,
         dragHandleColor: p.borderStrong,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(EmoRadius.xl)),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(EmoRadius.xl),
+          ),
         ),
       ),
       snackBarTheme: SnackBarThemeData(
@@ -64,8 +70,15 @@ abstract final class AppTheme {
         contentTextStyle: textTheme.bodyMedium?.copyWith(
           color: p.isDark ? p.textPrimary : p.canvas,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(EmoRadius.md)),
-        insetPadding: const EdgeInsets.fromLTRB(EmoSpace.gutter, 0, EmoSpace.gutter, 108),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(EmoRadius.md),
+        ),
+        insetPadding: const EdgeInsets.fromLTRB(
+          EmoSpace.gutter,
+          0,
+          EmoSpace.gutter,
+          EmoSpace.md,
+        ),
       ),
       tooltipTheme: TooltipThemeData(
         decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../models/prediction_result.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
@@ -42,37 +43,61 @@ class _PredictionTileState extends State<PredictionTile> {
                 children: [
                   StateBadge(state: item.predictedState, dense: true),
                   const SizedBox(width: EmoSpace.xs),
-                  Text('#${item.id}', style: context.text.labelSmall?.copyWith(letterSpacing: 0).tabular),
+                  Text(
+                    '#${item.id}',
+                    style: context.text.labelSmall
+                        ?.copyWith(letterSpacing: 0)
+                        .tabular,
+                  ),
                   const Spacer(),
                   if (flagged) ...[
                     Tooltip(
                       message: 'Low confidence',
-                      child: Icon(Icons.help_outline_rounded, size: 16, color: p.caution),
+                      child: Icon(
+                        Icons.help_outline_rounded,
+                        size: 16,
+                        color: p.caution,
+                      ),
                     ),
                     const SizedBox(width: 6),
                   ],
-                  ConfidenceRing(value: item.confidence, color: flagged ? p.caution : color, size: 42, stroke: 3.5),
+                  ConfidenceRing(
+                    value: item.confidence,
+                    color: flagged ? p.caution : p.brand,
+                    size: 42,
+                    stroke: 3.5,
+                  ),
                 ],
               ),
               const SizedBox(height: EmoSpace.sm),
               Row(
                 children: [
-                  Icon(action.icon, size: 18, color: color),
+                  Icon(action.icon, size: 18, color: p.textSecondary),
                   const SizedBox(width: EmoSpace.xs),
                   Expanded(
                     child: Text.rich(
-                      TextSpan(children: [
-                        TextSpan(text: action.label, style: context.text.titleSmall),
-                        TextSpan(
-                          text: '  ·  ${ActionStyle.timingLabel(item.whenToDo)}',
-                          style: context.text.bodySmall,
-                        ),
-                      ]),
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: action.label,
+                            style: context.text.titleSmall,
+                          ),
+                          TextSpan(
+                            text:
+                                '  ·  ${ActionStyle.timingLabel(item.whenToDo)}',
+                            style: context.text.bodySmall,
+                          ),
+                        ],
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  IntensityMeter(value: item.predictedIntensity, color: color, height: 14),
+                  IntensityMeter(
+                    value: item.predictedIntensity,
+                    color: color,
+                    height: 14,
+                  ),
                 ],
               ),
               AnimatedSize(
@@ -85,20 +110,30 @@ class _PredictionTileState extends State<PredictionTile> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (widget.journalText != null && widget.journalText!.isNotEmpty) ...[
+                            if (widget.journalText != null &&
+                                widget.journalText!.isNotEmpty) ...[
                               const Eyebrow('Journal entry'),
                               const SizedBox(height: 4),
-                              Text('“${widget.journalText}”',
-                                  style: context.text.bodyMedium?.copyWith(color: p.textPrimary)),
+                              Text(
+                                '“${widget.journalText}”',
+                                style: context.text.bodyMedium?.copyWith(
+                                  color: p.textPrimary,
+                                ),
+                              ),
                               const SizedBox(height: EmoSpace.sm),
                             ],
                             const Eyebrow('Support message'),
                             const SizedBox(height: 4),
-                            Text(item.supportMessage, style: context.text.bodySmall),
+                            Text(
+                              item.supportMessage,
+                              style: context.text.bodySmall,
+                            ),
                             const SizedBox(height: EmoSpace.sm),
                             Text(
                               'Intensity ${item.predictedIntensity}/5 · Confidence ${(item.confidence * 100).toStringAsFixed(1)}%',
-                              style: context.text.labelSmall?.copyWith(letterSpacing: 0.1).tabular,
+                              style: context.text.labelSmall
+                                  ?.copyWith(letterSpacing: 0.1)
+                                  .tabular,
                             ),
                           ],
                         ),

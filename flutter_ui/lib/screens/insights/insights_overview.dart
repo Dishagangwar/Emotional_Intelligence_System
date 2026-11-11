@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../models/prediction_result.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
@@ -13,8 +14,9 @@ class InsightsOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.emo;
     final total = predictions.length;
-    final avgConfidence =
-        total > 0 ? predictions.map((e) => e.confidence).reduce((a, b) => a + b) / total : 0.0;
+    final avgConfidence = total > 0
+        ? predictions.map((e) => e.confidence).reduce((a, b) => a + b) / total
+        : 0.0;
     final uncertain = predictions.where((e) => e.uncertainFlag == 1).length;
     final uncertainPct = total > 0 ? (uncertain / total * 100).round() : 0;
 
@@ -31,12 +33,17 @@ class InsightsOverview extends StatelessWidget {
     }
 
     final metrics = [
-      _Metric(label: 'Entries', value: '$total', icon: Icons.notes_rounded, color: p.brand),
+      _Metric(
+        label: 'Entries',
+        value: '$total',
+        icon: Icons.notes_rounded,
+        color: p.textSecondary,
+      ),
       _Metric(
         label: 'Avg confidence',
         value: '${(avgConfidence * 100).toStringAsFixed(1)}%',
         icon: Icons.speed_rounded,
-        color: EmotionStyle.calm.color(context),
+        color: p.brand,
       ),
       _Metric(
         label: 'Low confidence',
@@ -76,7 +83,10 @@ class InsightsOverview extends StatelessWidget {
             children: [
               Text('State distribution', style: context.text.titleMedium),
               const SizedBox(height: 2),
-              Text('How often the model predicted each state.', style: context.text.bodySmall),
+              Text(
+                'How often the model predicted each state.',
+                style: context.text.bodySmall,
+              ),
               const SizedBox(height: EmoSpace.md),
               DistributionBar(counts: counts),
             ],
@@ -89,13 +99,15 @@ class InsightsOverview extends StatelessWidget {
             children: [
               Text('Confidence spread', style: context.text.titleMedium),
               const SizedBox(height: 2),
-              Text('Entries per confidence band. Amber bands fall below the 60% threshold.',
-                  style: context.text.bodySmall),
+              Text(
+                'Entries per confidence band. Amber bands fall below the 60% threshold.',
+                style: context.text.bodySmall,
+              ),
               const SizedBox(height: EmoSpace.lg),
               MiniHistogram(
                 bins: bins,
                 labels: const ['0–20', '20–40', '40–60', '60–80', '80–100'],
-                color: EmotionStyle.calm.color(context),
+                color: p.brand,
                 lowColor: p.caution,
                 lowBins: 3,
               ),
@@ -114,7 +126,13 @@ class _Metric extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  const _Metric({required this.label, required this.value, required this.icon, required this.color, this.suffix});
+  const _Metric({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+    this.suffix,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +147,11 @@ class _Metric extends StatelessWidget {
               Icon(icon, size: 16, color: color),
               const SizedBox(width: 6),
               Flexible(
-                child: Text(label, style: context.text.labelMedium, overflow: TextOverflow.ellipsis),
+                child: Text(
+                  label,
+                  style: context.text.labelMedium,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
@@ -144,7 +166,12 @@ class _Metric extends StatelessWidget {
                 Text(value, style: context.text.headlineMedium?.tabular),
                 if (suffix != null) ...[
                   const SizedBox(width: 6),
-                  Text(suffix!, style: context.text.labelMedium?.copyWith(color: p.textTertiary).tabular),
+                  Text(
+                    suffix!,
+                    style: context.text.labelMedium
+                        ?.copyWith(color: p.textTertiary)
+                        .tabular,
+                  ),
                 ],
               ],
             ),

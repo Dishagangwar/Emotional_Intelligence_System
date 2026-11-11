@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
 
@@ -8,7 +9,6 @@ class JournalCard extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final VoidCallback onClear;
   final bool isAnalyzing;
-  final Color accent;
 
   const JournalCard({
     super.key,
@@ -16,35 +16,42 @@ class JournalCard extends StatelessWidget {
     required this.onChanged,
     required this.onClear,
     required this.isAnalyzing,
-    required this.accent,
   });
 
-  static int wordCount(String text) => text.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+  static int wordCount(String text) =>
+      text.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
 
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
 
     return EmoCard(
-      padding: const EdgeInsets.fromLTRB(EmoSpace.lg, EmoSpace.md, EmoSpace.md, EmoSpace.sm),
-      accent: accent,
+      padding: const EdgeInsets.fromLTRB(
+        EmoSpace.md,
+        EmoSpace.md,
+        EmoSpace.xs,
+        EmoSpace.xxs,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextField(
             controller: controller,
-            minLines: 4,
+            minLines: 3,
             maxLines: 9,
             textCapitalization: TextCapitalization.sentences,
             keyboardType: TextInputType.multiline,
-            style: context.text.bodyLarge?.copyWith(fontSize: 17, height: 1.55),
-            cursorColor: accent,
+            style: context.text.bodyLarge?.copyWith(height: 1.5),
+            cursorColor: p.brand,
             onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             decoration: InputDecoration(
               isCollapsed: true,
               border: InputBorder.none,
-              hintText: "What's on your mind? How did the session leave you feeling?",
-              hintStyle: context.text.bodyLarge?.copyWith(fontSize: 17, color: p.textTertiary),
+              hintText:
+                  "What's on your mind? How did the session leave you feeling?",
+              hintStyle: context.text.bodyLarge?.copyWith(
+                color: p.textTertiary,
+              ),
             ),
             onChanged: onChanged,
           ),
@@ -55,14 +62,21 @@ class JournalCard extends StatelessWidget {
               final words = wordCount(value.text);
               return Row(
                 children: [
-                  _StatusDot(active: isAnalyzing, color: accent),
+                  _StatusDot(
+                    active: isAnalyzing,
+                    color: isAnalyzing ? p.brand : p.textTertiary,
+                  ),
                   const SizedBox(width: EmoSpace.xs),
                   AnimatedSwitcher(
                     duration: EmoMotion.fast,
                     child: Text(
-                      isAnalyzing ? 'Reading…' : '$words ${words == 1 ? 'word' : 'words'}',
+                      isAnalyzing
+                          ? 'Reading…'
+                          : '$words ${words == 1 ? 'word' : 'words'}',
                       key: ValueKey(isAnalyzing ? -1 : words),
-                      style: context.text.labelMedium?.copyWith(color: p.textTertiary).tabular,
+                      style: context.text.labelMedium
+                          ?.copyWith(color: p.textTertiary)
+                          .tabular,
                     ),
                   ),
                   if (!isAnalyzing && words > 0 && words < 4) ...[
@@ -70,7 +84,9 @@ class JournalCard extends StatelessWidget {
                     Flexible(
                       child: Text(
                         '· a few more words improves accuracy',
-                        style: context.text.labelMedium?.copyWith(color: p.caution),
+                        style: context.text.labelMedium?.copyWith(
+                          color: p.caution,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -81,7 +97,11 @@ class JournalCard extends StatelessWidget {
                       onPressed: onClear,
                       tooltip: 'Clear entry',
                       visualDensity: VisualDensity.compact,
-                      icon: Icon(Icons.close_rounded, size: 18, color: p.textTertiary),
+                      icon: Icon(
+                        Icons.close_rounded,
+                        size: 18,
+                        color: p.textTertiary,
+                      ),
                     )
                   else
                     const SizedBox(height: 40),
@@ -105,8 +125,12 @@ class _StatusDot extends StatefulWidget {
   State<_StatusDot> createState() => _StatusDotState();
 }
 
-class _StatusDotState extends State<_StatusDot> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+class _StatusDotState extends State<_StatusDot>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 700),
+  );
 
   @override
   void initState() {

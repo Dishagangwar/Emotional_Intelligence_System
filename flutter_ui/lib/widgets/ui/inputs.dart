@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../theme/app_theme.dart';
 import 'pressable.dart';
 
@@ -9,7 +10,6 @@ class LevelSelector extends StatelessWidget {
   final IconData icon;
   final int value;
   final ValueChanged<int> onChanged;
-  final Color color;
   final String lowLabel;
   final String highLabel;
   final List<String> descriptors;
@@ -20,10 +20,15 @@ class LevelSelector extends StatelessWidget {
     required this.icon,
     required this.value,
     required this.onChanged,
-    required this.color,
     this.lowLabel = 'Low',
     this.highLabel = 'High',
-    this.descriptors = const ['Very low', 'Low', 'Moderate', 'High', 'Very high'],
+    this.descriptors = const [
+      'Very low',
+      'Low',
+      'Moderate',
+      'High',
+      'Very high',
+    ],
   });
 
   @override
@@ -44,10 +49,14 @@ class LevelSelector extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, size: 18, color: color),
+                Icon(icon, size: 18, color: p.textSecondary),
                 const SizedBox(width: EmoSpace.xs),
                 Expanded(
-                  child: Text(label, style: context.text.titleSmall, overflow: TextOverflow.ellipsis),
+                  child: Text(
+                    label,
+                    style: context.text.titleSmall,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 const SizedBox(width: EmoSpace.xs),
                 AnimatedSwitcher(
@@ -55,19 +64,23 @@ class LevelSelector extends StatelessWidget {
                   child: Text(
                     descriptors[safe - 1],
                     key: ValueKey(safe),
-                    style: context.text.labelMedium?.copyWith(color: color),
+                    style: context.text.labelMedium?.copyWith(color: p.brand),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: EmoSpace.sm),
-            Row(
-              children: List.generate(5, (i) {
-                final level = i + 1;
-                final filled = level <= safe;
-                return Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: i == 4 ? 0 : 6),
+            Container(
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                color: p.surfaceRaised,
+                borderRadius: BorderRadius.circular(EmoRadius.md),
+              ),
+              child: Row(
+                children: List.generate(5, (i) {
+                  final level = i + 1;
+                  final selected = level == safe;
+                  return Expanded(
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
@@ -77,46 +90,59 @@ class LevelSelector extends StatelessWidget {
                       child: MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: AnimatedContainer(
-                          duration: EmoMotion.medium,
+                          duration: EmoMotion.fast,
                           curve: EmoMotion.standard,
-                          height: 36,
+                          height: 34,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: filled
-                                ? color.withValues(alpha: 0.22 + 0.15 * (level / 5) * (p.isDark ? 1 : 0.8))
-                                : p.surfaceRaised,
+                            color: selected ? p.surface : Colors.transparent,
                             borderRadius: BorderRadius.circular(EmoRadius.sm),
-                            border: Border.all(
-                              color: level == safe ? color.withValues(alpha: 0.9) : Colors.transparent,
-                              width: 1.4,
-                            ),
+                            boxShadow: selected
+                                ? const [
+                                    BoxShadow(
+                                      color: Color(0x140F172A),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 1),
+                                    ),
+                                  ]
+                                : null,
                           ),
                           child: Text(
                             '$level',
-                            style: context.text.labelMedium?.copyWith(
-                              color: filled ? p.textPrimary : p.textTertiary,
-                            ).tabular,
+                            style: context.text.labelMedium
+                                ?.copyWith(
+                                  color: selected ? p.brand : p.textSecondary,
+                                  fontWeight: selected
+                                      ? FontWeight.w700
+                                      : FontWeight.w500,
+                                )
+                                .tabular,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
             const SizedBox(height: 6),
             Row(
               children: [
                 Expanded(
-                  child: Text(lowLabel,
-                      style: context.text.labelSmall?.copyWith(letterSpacing: 0), overflow: TextOverflow.ellipsis),
+                  child: Text(
+                    lowLabel,
+                    style: context.text.labelSmall?.copyWith(letterSpacing: 0),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 const SizedBox(width: EmoSpace.xs),
                 Expanded(
-                  child: Text(highLabel,
-                      textAlign: TextAlign.right,
-                      style: context.text.labelSmall?.copyWith(letterSpacing: 0),
-                      overflow: TextOverflow.ellipsis),
+                  child: Text(
+                    highLabel,
+                    textAlign: TextAlign.right,
+                    style: context.text.labelSmall?.copyWith(letterSpacing: 0),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
@@ -150,22 +176,29 @@ class ContextTile extends StatelessWidget {
       semanticLabel: '$label: $value. Tap to change.',
       child: AnimatedContainer(
         duration: EmoMotion.medium,
-        padding: const EdgeInsets.symmetric(horizontal: EmoSpace.sm, vertical: EmoSpace.sm),
+        padding: const EdgeInsets.symmetric(
+          horizontal: EmoSpace.sm,
+          vertical: EmoSpace.sm,
+        ),
         decoration: BoxDecoration(
           color: p.surfaceRaised,
           borderRadius: BorderRadius.circular(EmoRadius.md),
-          border: Border.all(color: p.border),
         ),
         child: ExcludeSemantics(
           child: Row(
             children: [
-              Text(emoji, style: const TextStyle(fontSize: 20)),
+              Text(emoji, style: const TextStyle(fontSize: 18)),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(label, style: context.text.labelSmall?.copyWith(letterSpacing: 0.2)),
+                    Text(
+                      label,
+                      style: context.text.labelSmall?.copyWith(
+                        letterSpacing: 0.2,
+                      ),
+                    ),
                     const SizedBox(height: 2),
                     AnimatedSwitcher(
                       duration: EmoMotion.fast,
@@ -201,7 +234,12 @@ class OptionItem<T> {
   final String emoji;
   final String? caption;
 
-  const OptionItem({required this.value, required this.label, required this.emoji, this.caption});
+  const OptionItem({
+    required this.value,
+    required this.label,
+    required this.emoji,
+    this.caption,
+  });
 }
 
 /// Shows a bottom sheet with a list of options and returns the chosen value.
@@ -211,7 +249,6 @@ Future<T?> showOptionSheet<T>({
   String? subtitle,
   required List<OptionItem<T>> options,
   required T selected,
-  required Color accent,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -219,10 +256,18 @@ Future<T?> showOptionSheet<T>({
     isScrollControlled: true,
     builder: (sheetContext) {
       final p = sheetContext.emo;
+      final accent = p.brand;
       return ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheetContext).height * 0.8),
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(sheetContext).height * 0.8,
+        ),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(EmoSpace.gutter, 0, EmoSpace.gutter, EmoSpace.xl),
+          padding: const EdgeInsets.fromLTRB(
+            EmoSpace.gutter,
+            0,
+            EmoSpace.gutter,
+            EmoSpace.xl,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -242,12 +287,17 @@ Future<T?> showOptionSheet<T>({
                     semanticLabel: o.label,
                     child: AnimatedContainer(
                       duration: EmoMotion.fast,
-                      padding: const EdgeInsets.symmetric(horizontal: EmoSpace.md, vertical: 14),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: EmoSpace.md,
+                        vertical: 14,
+                      ),
                       decoration: BoxDecoration(
-                        color: o.value == selected ? accent.withValues(alpha: p.isDark ? 0.14 : 0.1) : p.surfaceRaised,
+                        color: o.value == selected
+                            ? accent.withValues(alpha: 0.08)
+                            : p.surface,
                         borderRadius: BorderRadius.circular(EmoRadius.md),
                         border: Border.all(
-                          color: o.value == selected ? accent.withValues(alpha: 0.6) : Colors.transparent,
+                          color: o.value == selected ? accent : p.border,
                         ),
                       ),
                       child: Row(
@@ -258,13 +308,24 @@ Future<T?> showOptionSheet<T>({
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(o.label, style: sheetContext.text.titleSmall),
+                                Text(
+                                  o.label,
+                                  style: sheetContext.text.titleSmall,
+                                ),
                                 if (o.caption != null)
-                                  Text(o.caption!, style: sheetContext.text.bodySmall),
+                                  Text(
+                                    o.caption!,
+                                    style: sheetContext.text.bodySmall,
+                                  ),
                               ],
                             ),
                           ),
-                          if (o.value == selected) Icon(Icons.check_circle_rounded, color: accent, size: 20),
+                          if (o.value == selected)
+                            Icon(
+                              Icons.check_circle_rounded,
+                              color: accent,
+                              size: 20,
+                            ),
                         ],
                       ),
                     ),

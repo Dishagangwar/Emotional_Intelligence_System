@@ -12,21 +12,21 @@ abstract final class EmoSpace {
   static const double xxxl = 48;
 
   /// Horizontal page gutter.
-  static const double gutter = 20;
+  static const double gutter = 16;
 
   /// Content never grows wider than this on tablets / desktop / web.
   static const double maxContentWidth = 640;
 
   /// Bottom padding so content clears the floating navigation bar.
-  static const double navClearance = 120;
+  static const double navClearance = 32;
 }
 
 /// Corner radii.
 abstract final class EmoRadius {
-  static const double sm = 10;
-  static const double md = 14;
-  static const double lg = 20;
-  static const double xl = 28;
+  static const double sm = 8;
+  static const double md = 12;
+  static const double lg = 16;
+  static const double xl = 20;
   static const double pill = 999;
 }
 

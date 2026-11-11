@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 
 /// Horizontal bars showing the model's probability for every state.
@@ -7,12 +8,17 @@ class ProbabilityBars extends StatelessWidget {
   final Map<String, double> probabilities;
   final String highlight;
 
-  const ProbabilityBars({super.key, required this.probabilities, required this.highlight});
+  const ProbabilityBars({
+    super.key,
+    required this.probabilities,
+    required this.highlight,
+  });
 
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
-    final entries = probabilities.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+    final entries = probabilities.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
 
     return Column(
       children: [
@@ -60,14 +66,16 @@ class _ProbabilityRow extends StatelessWidget {
               child: Text(
                 style.label,
                 style: context.text.labelMedium?.copyWith(
-                  color: emphasised ? palette.textPrimary : palette.textSecondary,
+                  color: emphasised
+                      ? palette.textPrimary
+                      : palette.textSecondary,
                 ),
               ),
             ),
             Expanded(
               child: _Bar(
                 value: value,
-                color: emphasised ? color : color.withValues(alpha: 0.4),
+                color: emphasised ? color : palette.borderStrong,
                 track: palette.surfaceRaised,
                 height: 8,
               ),
@@ -77,9 +85,13 @@ class _ProbabilityRow extends StatelessWidget {
               child: Text(
                 pct < 1 ? '<1%' : '${pct.toStringAsFixed(0)}%',
                 textAlign: TextAlign.right,
-                style: context.text.labelMedium?.copyWith(
-                  color: emphasised ? palette.textPrimary : palette.textTertiary,
-                ).tabular,
+                style: context.text.labelMedium
+                    ?.copyWith(
+                      color: emphasised
+                          ? palette.textPrimary
+                          : palette.textTertiary,
+                    )
+                    .tabular,
               ),
             ),
           ],
@@ -95,7 +107,12 @@ class _Bar extends StatelessWidget {
   final Color track;
   final double height;
 
-  const _Bar({required this.value, required this.color, required this.track, required this.height});
+  const _Bar({
+    required this.value,
+    required this.color,
+    required this.track,
+    required this.height,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +123,18 @@ class _Bar extends StatelessWidget {
       builder: (context, v, _) {
         return Container(
           height: height,
-          decoration: BoxDecoration(color: track, borderRadius: BorderRadius.circular(height)),
+          decoration: BoxDecoration(
+            color: track,
+            borderRadius: BorderRadius.circular(height),
+          ),
           alignment: Alignment.centerLeft,
           child: FractionallySizedBox(
             widthFactor: v == 0 ? 0.0 : v.clamp(0.02, 1.0),
             child: Container(
-              decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(height)),
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(height),
+              ),
             ),
           ),
         );
@@ -126,7 +149,12 @@ class IntensityMeter extends StatelessWidget {
   final Color color;
   final double height;
 
-  const IntensityMeter({super.key, required this.value, required this.color, this.height = 18});
+  const IntensityMeter({
+    super.key,
+    required this.value,
+    required this.color,
+    this.height = 18,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +194,9 @@ class DistributionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.emo;
     final total = counts.values.fold<int>(0, (a, b) => a + b);
-    final ordered = EmotionStyle.all.where((s) => (counts[s.id] ?? 0) > 0).toList();
+    final ordered = EmotionStyle.all
+        .where((s) => (counts[s.id] ?? 0) > 0)
+        .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +211,9 @@ class DistributionBar extends StatelessWidget {
                   Expanded(
                     flex: counts[ordered[i].id]!,
                     child: Container(
-                      margin: EdgeInsets.only(right: i == ordered.length - 1 ? 0 : 2),
+                      margin: EdgeInsets.only(
+                        right: i == ordered.length - 1 ? 0 : 2,
+                      ),
                       color: ordered[i].colorFor(p),
                     ),
                   ),
@@ -201,14 +233,21 @@ class DistributionBar extends StatelessWidget {
                   Container(
                     width: 8,
                     height: 8,
-                    decoration: BoxDecoration(color: s.colorFor(p), shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                      color: s.colorFor(p),
+                      shape: BoxShape.circle,
+                    ),
                   ),
                   const SizedBox(width: 6),
                   Text(s.label, style: context.text.labelMedium),
                   const SizedBox(width: 4),
                   Text(
-                    total == 0 ? '0%' : '${((counts[s.id]! / total) * 100).round()}%',
-                    style: context.text.labelMedium?.copyWith(color: p.textTertiary).tabular,
+                    total == 0
+                        ? '0%'
+                        : '${((counts[s.id]! / total) * 100).round()}%',
+                    style: context.text.labelMedium
+                        ?.copyWith(color: p.textTertiary)
+                        .tabular,
                   ),
                 ],
               ),
@@ -252,7 +291,12 @@ class MiniHistogram extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('${bins[i]}', style: context.text.labelSmall?.copyWith(letterSpacing: 0).tabular),
+                  Text(
+                    '${bins[i]}',
+                    style: context.text.labelSmall
+                        ?.copyWith(letterSpacing: 0)
+                        .tabular,
+                  ),
                   const SizedBox(height: 4),
                   TweenAnimationBuilder<double>(
                     tween: Tween(end: maxV == 0 ? 0 : bins[i] / maxV),
@@ -261,13 +305,20 @@ class MiniHistogram extends StatelessWidget {
                     builder: (context, v, _) => Container(
                       height: 4 + (height - 4) * v,
                       decoration: BoxDecoration(
-                        color: (i < lowBins ? (lowColor ?? color) : color).withValues(alpha: 0.85),
+                        color: (i < lowBins ? (lowColor ?? color) : color)
+                            .withValues(alpha: 0.85),
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
                   ),
                   const SizedBox(height: 6),
-                  Text(labels[i], style: context.text.labelSmall?.copyWith(fontSize: 10, letterSpacing: 0)),
+                  Text(
+                    labels[i],
+                    style: context.text.labelSmall?.copyWith(
+                      fontSize: 10,
+                      letterSpacing: 0,
+                    ),
+                  ),
                 ],
               ),
             ),

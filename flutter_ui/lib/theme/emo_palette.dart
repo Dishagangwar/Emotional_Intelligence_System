@@ -48,38 +48,40 @@ class EmoPalette extends ThemeExtension<EmoPalette> {
 
   bool get isDark => brightness == Brightness.dark;
 
-  static const EmoPalette dark = EmoPalette(
-    brightness: Brightness.dark,
-    canvas: Color(0xFF0C0E14),
-    surface: Color(0xFF14171F),
-    surfaceRaised: Color(0xFF1B1F2A),
-    surfaceSunken: Color(0xFF0F1218),
-    border: Color(0x14FFFFFF),
-    borderStrong: Color(0x26FFFFFF),
-    textPrimary: Color(0xFFF3F4F7),
-    textSecondary: Color(0xFFA4AABA),
-    textTertiary: Color(0xFF6B7285),
-    onAccent: Color(0xFF0C0E14),
-    brand: Color(0xFF7C8CFF),
-    caution: Color(0xFFF2B45A),
-    danger: Color(0xFFF27A8A),
-  );
-
+  /// Primary theme: clean, clinical light.
   static const EmoPalette light = EmoPalette(
     brightness: Brightness.light,
-    canvas: Color(0xFFF6F5F2),
+    canvas: Color(0xFFF5F7FA),
     surface: Color(0xFFFFFFFF),
-    surfaceRaised: Color(0xFFF1F0EC),
-    surfaceSunken: Color(0xFFECEBE6),
-    border: Color(0x14000000),
-    borderStrong: Color(0x26000000),
-    textPrimary: Color(0xFF14161C),
-    textSecondary: Color(0xFF5B6070),
-    textTertiary: Color(0xFF8D92A0),
+    surfaceRaised: Color(0xFFF1F4F8),
+    surfaceSunken: Color(0xFFEEF2F6),
+    border: Color(0xFFE3E8EF),
+    borderStrong: Color(0xFFCBD5E1),
+    textPrimary: Color(0xFF0F172A),
+    textSecondary: Color(0xFF475569),
+    textTertiary: Color(0xFF94A3B8),
     onAccent: Color(0xFFFFFFFF),
-    brand: Color(0xFF4F5BD5),
-    caution: Color(0xFFB7791F),
-    danger: Color(0xFFC9435A),
+    brand: Color(0xFF2563EB),
+    caution: Color(0xFFD97706),
+    danger: Color(0xFFDC2626),
+  );
+
+  /// Optional dark counterpart (slate), same clinical language.
+  static const EmoPalette dark = EmoPalette(
+    brightness: Brightness.dark,
+    canvas: Color(0xFF0B1220),
+    surface: Color(0xFF111A2B),
+    surfaceRaised: Color(0xFF17223A),
+    surfaceSunken: Color(0xFF0E1626),
+    border: Color(0xFF1F2B44),
+    borderStrong: Color(0xFF334155),
+    textPrimary: Color(0xFFF1F5F9),
+    textSecondary: Color(0xFF94A3B8),
+    textTertiary: Color(0xFF64748B),
+    onAccent: Color(0xFFFFFFFF),
+    brand: Color(0xFF3B82F6),
+    caution: Color(0xFFF59E0B),
+    danger: Color(0xFFF87171),
   );
 
   @override
@@ -140,6 +142,7 @@ class EmoPalette extends ThemeExtension<EmoPalette> {
 }
 
 extension EmoThemeContext on BuildContext {
-  EmoPalette get emo => Theme.of(this).extension<EmoPalette>() ?? EmoPalette.dark;
+  EmoPalette get emo =>
+      Theme.of(this).extension<EmoPalette>() ?? EmoPalette.dark;
   TextTheme get text => Theme.of(this).textTheme;
 }

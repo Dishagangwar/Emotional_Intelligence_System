@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
 
@@ -12,7 +13,12 @@ class SoundLibrary extends StatelessWidget {
   static const _sounds = [
     ('🌊', 'Ocean tide', 'Slow surf for winding down', EmotionStyle.focused),
     ('🌧️', 'Night rain', 'Soft, steady rainfall', EmotionStyle.mixed),
-    ('🌲', 'Pine forest', 'Wind through trees and distant birds', EmotionStyle.calm),
+    (
+      '🌲',
+      'Pine forest',
+      'Wind through trees and distant birds',
+      EmotionStyle.calm,
+    ),
     ('🏔️', 'Alpine stream', 'Clear running water', EmotionStyle.restless),
   ];
 

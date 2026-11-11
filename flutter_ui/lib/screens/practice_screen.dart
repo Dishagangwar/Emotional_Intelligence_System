@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_theme.dart';
 import '../widgets/ui/ui.dart';
 import 'practice/breathing_exercise.dart';
@@ -34,11 +35,16 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final color = _selected.tone.color(context);
-
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      padding: const EdgeInsets.fromLTRB(EmoSpace.gutter, EmoSpace.xs, EmoSpace.gutter, EmoSpace.navClearance),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      padding: const EdgeInsets.fromLTRB(
+        EmoSpace.gutter,
+        EmoSpace.xs,
+        EmoSpace.gutter,
+        EmoSpace.navClearance,
+      ),
       child: ContentFrame(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,12 +54,13 @@ class _PracticeScreenState extends State<PracticeScreen> {
               title: 'Reset your state',
               subtitle: 'Short, guided exercises matched to how you feel.',
             ),
-            const SizedBox(height: EmoSpace.lg),
+            const SizedBox(height: EmoSpace.md),
             LayoutBuilder(
               builder: (context, constraints) {
                 final columns = constraints.maxWidth > 520 ? 4 : 2;
                 const gap = EmoSpace.xs;
-                final width = (constraints.maxWidth - gap * (columns - 1)) / columns;
+                final width =
+                    (constraints.maxWidth - gap * (columns - 1)) / columns;
                 return Wrap(
                   spacing: gap,
                   runSpacing: gap,
@@ -73,16 +80,26 @@ class _PracticeScreenState extends State<PracticeScreen> {
             ),
             const SizedBox(height: EmoSpace.lg),
             EmoCard(
-              accent: color,
-              padding: const EdgeInsets.fromLTRB(EmoSpace.lg, EmoSpace.xl, EmoSpace.lg, EmoSpace.lg),
+              padding: const EdgeInsets.fromLTRB(
+                EmoSpace.md,
+                EmoSpace.xl,
+                EmoSpace.md,
+                EmoSpace.md,
+              ),
               child: AnimatedSwitcher(
                 duration: EmoMotion.medium,
                 switchInCurve: EmoMotion.standard,
                 transitionBuilder: (child, anim) => FadeTransition(
                   opacity: anim,
-                  child: ScaleTransition(scale: Tween(begin: 0.98, end: 1.0).animate(anim), child: child),
+                  child: ScaleTransition(
+                    scale: Tween(begin: 0.98, end: 1.0).animate(anim),
+                    child: child,
+                  ),
                 ),
-                child: KeyedSubtree(key: ValueKey(_selected), child: _body(_selected)),
+                child: KeyedSubtree(
+                  key: ValueKey(_selected),
+                  child: _body(_selected),
+                ),
               ),
             ),
           ],
@@ -97,12 +114,16 @@ class _ToolTile extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _ToolTile({required this.tool, required this.selected, required this.onTap});
+  const _ToolTile({
+    required this.tool,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
-    final color = tool.tone.color(context);
+    final color = p.brand;
 
     return Pressable(
       onTap: onTap,
@@ -113,9 +134,12 @@ class _ToolTile extends StatelessWidget {
         curve: EmoMotion.standard,
         padding: const EdgeInsets.all(EmoSpace.md),
         decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: p.isDark ? 0.14 : 0.1) : p.surface,
+          color: p.surface,
           borderRadius: BorderRadius.circular(EmoRadius.lg),
-          border: Border.all(color: selected ? color.withValues(alpha: 0.55) : p.border),
+          border: Border.all(
+            color: selected ? color : p.border,
+            width: selected ? 1.5 : 1,
+          ),
         ),
         child: ExcludeSemantics(
           child: Column(
@@ -126,15 +150,27 @@ class _ToolTile extends StatelessWidget {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: selected ? color : color.withValues(alpha: 0.14),
+                  color: selected ? color : p.surfaceRaised,
                   borderRadius: BorderRadius.circular(EmoRadius.sm),
                 ),
-                child: Icon(tool.icon, size: 20, color: selected ? p.onAccent : color),
+                child: Icon(
+                  tool.icon,
+                  size: 20,
+                  color: selected ? p.onAccent : p.textSecondary,
+                ),
               ),
               const SizedBox(height: EmoSpace.sm),
-              Text(tool.label, style: context.text.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+              Text(
+                tool.label,
+                style: context.text.titleSmall,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
               const SizedBox(height: 2),
-              Text(tool.duration, style: context.text.labelSmall?.copyWith(letterSpacing: 0.1)),
+              Text(
+                tool.duration,
+                style: context.text.labelSmall?.copyWith(letterSpacing: 0.1),
+              ),
             ],
           ),
         ),

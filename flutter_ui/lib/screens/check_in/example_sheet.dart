@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../models/reflection_input.dart';
 import '../../services/data_repository.dart';
 import '../../theme/app_theme.dart';
@@ -14,15 +15,24 @@ Future<ReflectionInput?> showExampleSheet(BuildContext context) {
     builder: (sheetContext) {
       final p = sheetContext.emo;
       return ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(sheetContext).height * 0.85),
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(sheetContext).height * 0.85,
+        ),
         child: ListView(
           shrinkWrap: true,
-          padding: const EdgeInsets.fromLTRB(EmoSpace.gutter, 0, EmoSpace.gutter, EmoSpace.xl),
+          padding: const EdgeInsets.fromLTRB(
+            EmoSpace.gutter,
+            0,
+            EmoSpace.gutter,
+            EmoSpace.xl,
+          ),
           children: [
             Text('Try an example', style: sheetContext.text.headlineSmall),
             const SizedBox(height: EmoSpace.xxs),
-            Text('Real entries from the test dataset. Loading one fills in the text and context.',
-                style: sheetContext.text.bodySmall),
+            Text(
+              'Real entries from the test dataset. Loading one fills in the text and context.',
+              style: sheetContext.text.bodySmall,
+            ),
             const SizedBox(height: EmoSpace.md),
             for (final s in DataRepository.sampleScenarios)
               Padding(
@@ -40,12 +50,23 @@ Future<ReflectionInput?> showExampleSheet(BuildContext context) {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('“${s.journalText}”', style: sheetContext.text.bodyMedium?.copyWith(color: p.textPrimary)),
+                        Text(
+                          '“${s.journalText}”',
+                          style: sheetContext.text.bodyMedium?.copyWith(
+                            color: p.textPrimary,
+                          ),
+                        ),
                         const SizedBox(height: EmoSpace.xs),
                         Text(
                           'Stress ${s.stressLevel}/5 · Energy ${s.energyLevel}/5 · Sleep ${ContextOptions.sleepLabel(s.sleepHours)} · '
-                          '${ContextOptions.find(ContextOptions.timeOfDay, s.timeOfDay, fallback: OptionItem(value: s.timeOfDay, label: s.timeOfDay, emoji: '')).label}',
-                          style: sheetContext.text.labelSmall?.copyWith(letterSpacing: 0.1),
+                          '${ContextOptions.find(
+                            ContextOptions.timeOfDay,
+                            s.timeOfDay,
+                            fallback: OptionItem(value: s.timeOfDay, label: s.timeOfDay, emoji: ''),
+                          ).label}',
+                          style: sheetContext.text.labelSmall?.copyWith(
+                            letterSpacing: 0.1,
+                          ),
                         ),
                       ],
                     ),

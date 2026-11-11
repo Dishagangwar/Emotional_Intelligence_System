@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import '../models/prediction_result.dart';
 import '../models/reflection_input.dart';
 import '../services/intelligence_engine.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_theme.dart' show EmoSpace;
 import '../widgets/ui/ui.dart';
 import 'check_in/context_panel.dart';
 import 'check_in/example_sheet.dart';
@@ -16,7 +18,11 @@ class CheckInScreen extends StatefulWidget {
   final ValueChanged<String>? onNavigateToTool;
   final ValueChanged<String>? onEmotionChanged;
 
-  const CheckInScreen({super.key, this.onNavigateToTool, this.onEmotionChanged});
+  const CheckInScreen({
+    super.key,
+    this.onNavigateToTool,
+    this.onEmotionChanged,
+  });
 
   @override
   State<CheckInScreen> createState() => _CheckInScreenState();
@@ -41,8 +47,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
   @override
   void initState() {
     super.initState();
-    _textController.text =
-        "The ocean ambience helped me stop drifting and concentrate on my next steps. My to-do list feels less chaotic.";
+    _textController.text = "The ocean ambience helped me stop drifting and concentrate on my next steps. My to-do list feels less chaotic.";
     _runAnalysis(immediate: true);
   }
 
@@ -54,15 +59,15 @@ class _CheckInScreenState extends State<CheckInScreen> {
   }
 
   ReflectionInput _buildInput() => ReflectionInput(
-        journalText: _textController.text,
-        ambienceType: _ambienceType,
-        sleepHours: _sleepHours,
-        energyLevel: _energyLevel,
-        stressLevel: _stressLevel,
-        timeOfDay: _timeOfDay,
-        faceEmotionHint: _faceEmotionHint,
-        previousDayMood: _previousDayMood,
-      );
+    journalText: _textController.text,
+    ambienceType: _ambienceType,
+    sleepHours: _sleepHours,
+    energyLevel: _energyLevel,
+    stressLevel: _stressLevel,
+    timeOfDay: _timeOfDay,
+    faceEmotionHint: _faceEmotionHint,
+    previousDayMood: _previousDayMood,
+  );
 
   void _applyPrediction(ReflectionInput input) {
     try {
@@ -134,13 +139,17 @@ class _CheckInScreenState extends State<CheckInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = _currentResult?.predictedState ?? 'focused';
-    final accent = EmotionStyle.of(state).color(context);
-
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      padding: const EdgeInsets.fromLTRB(EmoSpace.gutter, EmoSpace.xs, EmoSpace.gutter, EmoSpace.navClearance),
+      padding: const EdgeInsets.fromLTRB(
+        EmoSpace.gutter,
+        EmoSpace.xs,
+        EmoSpace.gutter,
+        EmoSpace.navClearance,
+      ),
       child: ContentFrame(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -148,15 +157,14 @@ class _CheckInScreenState extends State<CheckInScreen> {
             PageHeader(
               eyebrow: _greeting(),
               title: 'How are you, really?',
-              subtitle: 'Write freely. Emostate reads your words and context to understand your state.',
+              subtitle: 'Write freely. Emostate analyses your words and context in real time.',
             ),
             const SizedBox(height: EmoSpace.xs),
             Align(
               alignment: Alignment.centerLeft,
               child: EmoButton.ghost(
                 label: 'Try an example',
-                icon: Icons.auto_awesome_rounded,
-                color: accent,
+                icon: Icons.auto_awesome_outlined,
                 onPressed: _openExamples,
               ),
             ),
@@ -164,21 +172,11 @@ class _CheckInScreenState extends State<CheckInScreen> {
             JournalCard(
               controller: _textController,
               isAnalyzing: _isAnalyzing,
-              accent: accent,
               onChanged: (_) => _runAnalysis(),
               onClear: () {
                 _textController.clear();
                 _runAnalysis();
               },
-            ),
-            const SizedBox(height: EmoSpace.xl),
-            const SectionHeader(title: 'Your reading', subtitle: 'Updates live as you write.'),
-            ReadingCard(
-              result: _currentResult,
-              isAnalyzing: _isAnalyzing,
-              error: _error,
-              onRetry: () => _runAnalysis(immediate: true),
-              onStartPractice: widget.onNavigateToTool == null ? null : (tool) => widget.onNavigateToTool!(tool.id),
             ),
             const SizedBox(height: EmoSpace.xl),
             const SectionHeader(
@@ -193,7 +191,6 @@ class _CheckInScreenState extends State<CheckInScreen> {
               faceEmotionHint: _faceEmotionHint,
               ambienceType: _ambienceType,
               previousDayMood: _previousDayMood,
-              accent: accent,
               onStressChanged: (v) => _update(() => _stressLevel = v),
               onEnergyChanged: (v) => _update(() => _energyLevel = v),
               onSleepChanged: (v) => _update(() => _sleepHours = v),
@@ -201,6 +198,20 @@ class _CheckInScreenState extends State<CheckInScreen> {
               onFaceChanged: (v) => _update(() => _faceEmotionHint = v),
               onAmbienceChanged: (v) => _update(() => _ambienceType = v),
               onPreviousMoodChanged: (v) => _update(() => _previousDayMood = v),
+            ),
+            const SizedBox(height: EmoSpace.xl),
+            const SectionHeader(
+              title: 'Your reading',
+              subtitle: 'Updates live as you write or adjust context.',
+            ),
+            ReadingCard(
+              result: _currentResult,
+              isAnalyzing: _isAnalyzing,
+              error: _error,
+              onRetry: () => _runAnalysis(immediate: true),
+              onStartPractice: widget.onNavigateToTool == null
+                  ? null
+                  : (tool) => widget.onNavigateToTool!(tool.id),
             ),
           ],
         ),

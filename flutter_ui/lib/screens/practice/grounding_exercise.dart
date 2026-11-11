@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
 
@@ -22,16 +23,41 @@ class GroundingExercise extends StatefulWidget {
 
 class _GroundingExerciseState extends State<GroundingExercise> {
   static const _steps = [
-    _Step(5, 'see', 'Look around slowly. Name five things you can see — a colour, a shape, a patch of light.',
-        Icons.visibility_outlined, EmotionStyle.focused),
-    _Step(4, 'touch', 'Notice four things you can feel: your clothes, the chair beneath you, the air on your skin.',
-        Icons.back_hand_outlined, EmotionStyle.calm),
-    _Step(3, 'hear', 'Listen for three sounds, near or far. A fan, traffic, your own breathing.',
-        Icons.hearing_outlined, EmotionStyle.restless),
-    _Step(2, 'smell', 'Find two things you can smell. Coffee, soap, fresh air — or simply recall a favourite scent.',
-        Icons.local_florist_outlined, EmotionStyle.mixed),
-    _Step(1, 'taste', 'Notice one thing you can taste. Take a sip of water if it helps.',
-        Icons.water_drop_outlined, EmotionStyle.overwhelmed),
+    _Step(
+      5,
+      'see',
+      'Look around slowly. Name five things you can see — a colour, a shape, a patch of light.',
+      Icons.visibility_outlined,
+      EmotionStyle.focused,
+    ),
+    _Step(
+      4,
+      'touch',
+      'Notice four things you can feel: your clothes, the chair beneath you, the air on your skin.',
+      Icons.back_hand_outlined,
+      EmotionStyle.calm,
+    ),
+    _Step(
+      3,
+      'hear',
+      'Listen for three sounds, near or far. A fan, traffic, your own breathing.',
+      Icons.hearing_outlined,
+      EmotionStyle.restless,
+    ),
+    _Step(
+      2,
+      'smell',
+      'Find two things you can smell. Coffee, soap, fresh air — or simply recall a favourite scent.',
+      Icons.local_florist_outlined,
+      EmotionStyle.mixed,
+    ),
+    _Step(
+      1,
+      'taste',
+      'Notice one thing you can taste. Take a sip of water if it helps.',
+      Icons.water_drop_outlined,
+      EmotionStyle.overwhelmed,
+    ),
   ];
 
   int _step = 0;
@@ -48,22 +74,25 @@ class _GroundingExerciseState extends State<GroundingExercise> {
   }
 
   void _restart() => setState(() {
-        _step = 0;
-        _complete = false;
-      });
+    _step = 0;
+    _complete = false;
+  });
 
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
 
     if (_complete) {
-      final color = EmotionStyle.calm.color(context);
+      final color = p.brand;
       return Column(
         children: [
           Container(
             width: 80,
             height: 80,
-            decoration: BoxDecoration(color: color.withValues(alpha: 0.14), shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.14),
+              shape: BoxShape.circle,
+            ),
             child: Icon(Icons.check_rounded, color: color, size: 40),
           ),
           const SizedBox(height: EmoSpace.lg),
@@ -75,13 +104,17 @@ class _GroundingExerciseState extends State<GroundingExercise> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: EmoSpace.xl),
-          EmoButton.secondary(label: 'Go again', icon: Icons.replay_rounded, onPressed: _restart),
+          EmoButton.secondary(
+            label: 'Go again',
+            icon: Icons.replay_rounded,
+            onPressed: _restart,
+          ),
         ],
       );
     }
 
     final s = _steps[_step];
-    final color = s.tone.color(context);
+    final color = p.brand;
 
     return Column(
       children: [
@@ -107,7 +140,10 @@ class _GroundingExerciseState extends State<GroundingExercise> {
           transitionBuilder: (child, anim) => FadeTransition(
             opacity: anim,
             child: SlideTransition(
-              position: Tween(begin: const Offset(0.06, 0), end: Offset.zero).animate(anim),
+              position: Tween(
+                begin: const Offset(0.06, 0),
+                end: Offset.zero,
+              ).animate(anim),
               child: child,
             ),
           ),
@@ -120,7 +156,10 @@ class _GroundingExerciseState extends State<GroundingExercise> {
                   Container(
                     width: 96,
                     height: 96,
-                    decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.12),
+                      shape: BoxShape.circle,
+                    ),
                   ),
                   Icon(s.icon, color: color, size: 40),
                 ],
@@ -129,15 +168,25 @@ class _GroundingExerciseState extends State<GroundingExercise> {
               Text.rich(
                 TextSpan(
                   children: [
-                    TextSpan(text: '${s.count} ', style: TextStyle(color: color)),
-                    TextSpan(text: 'thing${s.count == 1 ? '' : 's'} you can ${s.sense}'),
+                    TextSpan(
+                      text: '${s.count} ',
+                      style: TextStyle(color: color),
+                    ),
+                    TextSpan(
+                      text:
+                          'thing${s.count == 1 ? '' : 's'} you can ${s.sense}',
+                    ),
                   ],
                 ),
                 style: context.text.headlineSmall,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: EmoSpace.xs),
-              Text(s.prompt, style: context.text.bodyMedium, textAlign: TextAlign.center),
+              Text(
+                s.prompt,
+                style: context.text.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
@@ -155,8 +204,9 @@ class _GroundingExerciseState extends State<GroundingExercise> {
             Expanded(
               child: EmoButton(
                 label: _step == _steps.length - 1 ? 'Finish' : 'Next',
-                icon: _step == _steps.length - 1 ? Icons.check_rounded : Icons.arrow_forward_rounded,
-                color: color,
+                icon: _step == _steps.length - 1
+                    ? Icons.check_rounded
+                    : Icons.arrow_forward_rounded,
                 expand: true,
                 onPressed: _next,
               ),

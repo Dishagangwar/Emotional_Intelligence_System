@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'emo_palette.dart';
 
 /// Type scale for Emostate.
@@ -13,28 +14,74 @@ abstract final class EmoTypography {
   static const List<FontFeature> tabular = [FontFeature.tabularFigures()];
 
   static TextTheme textTheme(EmoPalette p) {
-    TextStyle base(double size, FontWeight weight, Color color,
-            {double height = 1.3, double spacing = 0}) =>
-        TextStyle(
-          fontFamily: fontFamily,
-          fontSize: size,
-          fontWeight: weight,
-          color: color,
-          height: height,
-          letterSpacing: spacing,
-        );
+    TextStyle base(
+      double size,
+      FontWeight weight,
+      Color color, {
+      double height = 1.3,
+      double spacing = 0,
+    }) => TextStyle(
+      fontFamily: fontFamily,
+      fontSize: size,
+      fontWeight: weight,
+      color: color,
+      height: height,
+      letterSpacing: spacing,
+    );
 
     return TextTheme(
       // Hero numbers & state names
-      displayLarge: base(44, FontWeight.w700, p.textPrimary, height: 1.05, spacing: -1.4),
-      displayMedium: base(36, FontWeight.w700, p.textPrimary, height: 1.08, spacing: -1.0),
-      displaySmall: base(30, FontWeight.w700, p.textPrimary, height: 1.1, spacing: -0.8),
+      displayLarge: base(
+        44,
+        FontWeight.w700,
+        p.textPrimary,
+        height: 1.05,
+        spacing: -1.4,
+      ),
+      displayMedium: base(
+        36,
+        FontWeight.w700,
+        p.textPrimary,
+        height: 1.08,
+        spacing: -1.0,
+      ),
+      displaySmall: base(
+        30,
+        FontWeight.w700,
+        p.textPrimary,
+        height: 1.1,
+        spacing: -0.8,
+      ),
       // Screen titles
-      headlineMedium: base(26, FontWeight.w700, p.textPrimary, height: 1.15, spacing: -0.6),
-      headlineSmall: base(22, FontWeight.w700, p.textPrimary, height: 1.2, spacing: -0.4),
+      headlineMedium: base(
+        26,
+        FontWeight.w700,
+        p.textPrimary,
+        height: 1.15,
+        spacing: -0.6,
+      ),
+      headlineSmall: base(
+        22,
+        FontWeight.w700,
+        p.textPrimary,
+        height: 1.2,
+        spacing: -0.4,
+      ),
       // Card titles
-      titleLarge: base(19, FontWeight.w600, p.textPrimary, height: 1.25, spacing: -0.2),
-      titleMedium: base(16, FontWeight.w600, p.textPrimary, height: 1.3, spacing: -0.1),
+      titleLarge: base(
+        19,
+        FontWeight.w600,
+        p.textPrimary,
+        height: 1.25,
+        spacing: -0.2,
+      ),
+      titleMedium: base(
+        16,
+        FontWeight.w600,
+        p.textPrimary,
+        height: 1.3,
+        spacing: -0.1,
+      ),
       titleSmall: base(14, FontWeight.w600, p.textPrimary, height: 1.3),
       // Reading text
       bodyLarge: base(16, FontWeight.w400, p.textPrimary, height: 1.55),

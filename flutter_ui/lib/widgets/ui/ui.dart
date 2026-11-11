@@ -1,7 +1,6 @@
 /// Emostate design-system components. Import this one file in screens.
 library;
 
-export 'ambient_backdrop.dart';
 export 'confidence_ring.dart';
 export 'data_viz.dart';
 export 'emo_button.dart';

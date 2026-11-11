@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
 
@@ -19,11 +21,14 @@ class BreathingExercise extends StatefulWidget {
   State<BreathingExercise> createState() => _BreathingExerciseState();
 }
 
-class _BreathingExerciseState extends State<BreathingExercise> with SingleTickerProviderStateMixin {
+class _BreathingExerciseState extends State<BreathingExercise>
+    with SingleTickerProviderStateMixin {
   static const int _phaseSeconds = 4;
 
-  late final AnimationController _animationController =
-      AnimationController(vsync: this, duration: const Duration(seconds: _phaseSeconds));
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: _phaseSeconds),
+  );
   Timer? _timer;
 
   BreathingPhase _currentPhase = BreathingPhase.inhale;
@@ -116,13 +121,17 @@ class _BreathingExerciseState extends State<BreathingExercise> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
-    final color = EmotionStyle.calm.color(context);
+    final color = p.brand;
     final done = _cyclesCompleted >= widget.targetRounds;
 
     return Column(
       children: [
         Text(
-          done ? 'Nicely done' : (_started ? _phaseNames[_currentPhase]! : 'Find a comfortable seat'),
+          done
+              ? 'Nicely done'
+              : (_started
+                    ? _phaseNames[_currentPhase]!
+                    : 'Find a comfortable seat'),
           style: context.text.headlineSmall,
           textAlign: TextAlign.center,
         ),
@@ -137,7 +146,9 @@ class _BreathingExerciseState extends State<BreathingExercise> with SingleTicker
         const SizedBox(height: EmoSpace.xl),
         Semantics(
           liveRegion: true,
-          label: _started ? '${_phaseNames[_currentPhase]}, $_secondsLeft seconds' : 'Ready',
+          label: _started
+              ? '${_phaseNames[_currentPhase]}, $_secondsLeft seconds'
+              : 'Ready',
           child: ExcludeSemantics(
             child: AnimatedBuilder(
               animation: _animationController,
@@ -164,7 +175,10 @@ class _BreathingExerciseState extends State<BreathingExercise> with SingleTicker
                         height: 200,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(48),
-                          border: Border.all(color: color.withValues(alpha: 0.18), width: 1.5),
+                          border: Border.all(
+                            color: color.withValues(alpha: 0.18),
+                            width: 1.5,
+                          ),
                         ),
                       ),
                       Transform.scale(
@@ -177,11 +191,16 @@ class _BreathingExerciseState extends State<BreathingExercise> with SingleTicker
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [color.withValues(alpha: 0.55), color.withValues(alpha: 0.18)],
+                              colors: [
+                                color.withValues(alpha: 0.55),
+                                color.withValues(alpha: 0.18),
+                              ],
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: color.withValues(alpha: _isRunning ? 0.35 : 0.12),
+                                color: color.withValues(
+                                  alpha: _isRunning ? 0.35 : 0.12,
+                                ),
                                 blurRadius: 48,
                                 spreadRadius: 4,
                               ),
@@ -205,19 +224,24 @@ class _BreathingExerciseState extends State<BreathingExercise> with SingleTicker
         const SizedBox(height: EmoSpace.md),
         Text(
           'Rounds completed: $_cyclesCompleted',
-          style: context.text.labelMedium?.copyWith(color: p.textTertiary).tabular,
+          style: context.text.labelMedium
+              ?.copyWith(color: p.textTertiary)
+              .tabular,
         ),
         const SizedBox(height: EmoSpace.lg),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (_isRunning)
-              EmoButton.secondary(label: 'Pause', icon: Icons.pause_rounded, onPressed: _pause)
+              EmoButton.secondary(
+                label: 'Pause',
+                icon: Icons.pause_rounded,
+                onPressed: _pause,
+              )
             else
               EmoButton(
                 label: _started ? 'Resume' : 'Begin',
                 icon: Icons.play_arrow_rounded,
-                color: color,
                 onPressed: _started ? _resume : _start,
               ),
             if (_started) ...[

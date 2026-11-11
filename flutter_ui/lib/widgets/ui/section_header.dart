@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 
 /// Small uppercase label used above values ("CURRENT STATE").
@@ -69,7 +70,12 @@ class SectionHeader extends StatelessWidget {
   final String? subtitle;
   final Widget? trailing;
 
-  const SectionHeader({super.key, required this.title, this.subtitle, this.trailing});
+  const SectionHeader({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.trailing,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +88,10 @@ class SectionHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Semantics(header: true, child: Text(title, style: context.text.titleMedium)),
+                Semantics(
+                  header: true,
+                  child: Text(title, style: context.text.titleMedium),
+                ),
                 if (subtitle != null) ...[
                   const SizedBox(height: 2),
                   Text(subtitle!, style: context.text.bodySmall),

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 import 'pressable.dart';
 
-/// Selectable pill used for filters and option pickers.
+/// Selectable filter pill. Selected = solid brand blue. An optional [dot]
+/// colour identifies a category (e.g. an emotional state).
 class EmoChip extends StatelessWidget {
   final String label;
   final bool selected;
   final VoidCallback? onTap;
-  final Color? color;
+  final Color? dot;
   final IconData? icon;
-  final String? emoji;
   final String? trailing;
 
   const EmoChip({
@@ -17,43 +18,48 @@ class EmoChip extends StatelessWidget {
     required this.label,
     this.selected = false,
     this.onTap,
-    this.color,
+    this.dot,
     this.icon,
-    this.emoji,
     this.trailing,
   });
 
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
-    final accent = color ?? p.brand;
-    final fg = selected ? p.textPrimary : p.textSecondary;
+    final fg = selected ? p.onAccent : p.textSecondary;
 
     return Pressable(
       onTap: onTap,
       selected: selected,
       semanticLabel: label,
       child: AnimatedContainer(
-        duration: EmoMotion.medium,
-        curve: EmoMotion.standard,
-        height: 40,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
+        duration: EmoMotion.fast,
+        height: 34,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: selected ? accent.withValues(alpha: p.isDark ? 0.16 : 0.12) : p.surfaceRaised,
+          color: selected ? p.brand : p.surface,
           borderRadius: BorderRadius.circular(EmoRadius.pill),
-          border: Border.all(
-            color: selected ? accent.withValues(alpha: 0.6) : p.border,
-          ),
+          border: Border.all(color: selected ? p.brand : p.border),
         ),
         child: ExcludeSemantics(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (emoji != null) ...[
-                Text(emoji!, style: const TextStyle(fontSize: 15)),
+              if (dot != null) ...[
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: dot,
+                    shape: BoxShape.circle,
+                    border: selected
+                        ? Border.all(color: p.onAccent, width: 1.5)
+                        : null,
+                  ),
+                ),
                 const SizedBox(width: 6),
               ] else if (icon != null) ...[
-                Icon(icon, size: 16, color: selected ? accent : p.textTertiary),
+                Icon(icon, size: 15, color: fg),
                 const SizedBox(width: 6),
               ],
               Text(label, style: context.text.labelMedium?.copyWith(color: fg)),
@@ -61,10 +67,13 @@ class EmoChip extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   trailing!,
-                  style: context.text.labelSmall?.copyWith(
-                    color: selected ? accent : p.textTertiary,
-                    letterSpacing: 0,
-                  ).tabular,
+                  style: context.text.labelMedium
+                      ?.copyWith(
+                        color: selected
+                            ? p.onAccent.withValues(alpha: 0.75)
+                            : p.textTertiary,
+                      )
+                      .tabular,
                 ),
               ],
             ],

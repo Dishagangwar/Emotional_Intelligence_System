@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'emo_palette.dart';
 
 /// Presentation metadata for each emotional state the model can return.
@@ -30,52 +31,59 @@ class EmotionStyle {
     label: 'Focused',
     description: 'Clear-headed and ready to engage.',
     icon: Icons.center_focus_strong_rounded,
-    darkColor: Color(0xFF7C8CFF),
-    lightColor: Color(0xFF4F5BD5),
+    darkColor: Color(0xFF818CF8),
+    lightColor: Color(0xFF4F46E5),
   );
   static const calm = EmotionStyle(
     id: 'calm',
     label: 'Calm',
     description: 'Settled and at ease.',
     icon: Icons.spa_rounded,
-    darkColor: Color(0xFF6FD3A8),
-    lightColor: Color(0xFF23996B),
+    darkColor: Color(0xFF34D399),
+    lightColor: Color(0xFF059669),
   );
   static const restless = EmotionStyle(
     id: 'restless',
     label: 'Restless',
     description: 'Energy with nowhere to land yet.',
     icon: Icons.bolt_rounded,
-    darkColor: Color(0xFFF2B45A),
-    lightColor: Color(0xFFB7791F),
+    darkColor: Color(0xFFFBBF24),
+    lightColor: Color(0xFFD97706),
   );
   static const overwhelmed = EmotionStyle(
     id: 'overwhelmed',
     label: 'Overwhelmed',
     description: 'Carrying more than feels manageable.',
     icon: Icons.waves_rounded,
-    darkColor: Color(0xFFF27A8A),
-    lightColor: Color(0xFFC9435A),
+    darkColor: Color(0xFFFB7185),
+    lightColor: Color(0xFFE11D48),
   );
   static const mixed = EmotionStyle(
     id: 'mixed',
     label: 'Mixed',
     description: 'Pulled in more than one direction.',
     icon: Icons.contrast_rounded,
-    darkColor: Color(0xFFB59CF5),
-    lightColor: Color(0xFF7E5CD6),
+    darkColor: Color(0xFFA78BFA),
+    lightColor: Color(0xFF7C3AED),
   );
   static const neutral = EmotionStyle(
     id: 'neutral',
     label: 'Neutral',
     description: 'Steady, without strong signals.',
     icon: Icons.radio_button_unchecked_rounded,
-    darkColor: Color(0xFF9AA3B5),
-    lightColor: Color(0xFF667085),
+    darkColor: Color(0xFF94A3B8),
+    lightColor: Color(0xFF64748B),
   );
 
   /// All states in display order.
-  static const List<EmotionStyle> all = [focused, calm, restless, overwhelmed, mixed, neutral];
+  static const List<EmotionStyle> all = [
+    focused,
+    calm,
+    restless,
+    overwhelmed,
+    mixed,
+    neutral,
+  ];
 
   static EmotionStyle of(String state) {
     switch (state.toLowerCase().trim()) {
@@ -113,10 +121,34 @@ class EmotionStyle {
 
 /// The four guided practices available in the Practice tab.
 enum PracticeTool {
-  breathing('breathing', 'Box breathing', '4 min', Icons.air_rounded, EmotionStyle.calm),
-  focus('focus', 'Focus sprint', '15–45 min', Icons.timer_outlined, EmotionStyle.focused),
-  grounding('grounding', '5-4-3-2-1 grounding', '3 min', Icons.spa_outlined, EmotionStyle.mixed),
-  sound('sound', 'Soundscapes', 'Ambient', Icons.headphones_rounded, EmotionStyle.restless);
+  breathing(
+    'breathing',
+    'Box breathing',
+    '4 min',
+    Icons.air_rounded,
+    EmotionStyle.calm,
+  ),
+  focus(
+    'focus',
+    'Focus sprint',
+    '15–45 min',
+    Icons.timer_outlined,
+    EmotionStyle.focused,
+  ),
+  grounding(
+    'grounding',
+    '5-4-3-2-1 grounding',
+    '3 min',
+    Icons.spa_outlined,
+    EmotionStyle.mixed,
+  ),
+  sound(
+    'sound',
+    'Soundscapes',
+    'Ambient',
+    Icons.headphones_rounded,
+    EmotionStyle.restless,
+  );
 
   final String id;
   final String label;
@@ -126,8 +158,10 @@ enum PracticeTool {
 
   const PracticeTool(this.id, this.label, this.duration, this.icon, this.tone);
 
-  static PracticeTool fromId(String id) =>
-      PracticeTool.values.firstWhere((t) => t.id == id, orElse: () => PracticeTool.breathing);
+  static PracticeTool fromId(String id) => PracticeTool.values.firstWhere(
+    (t) => t.id == id,
+    orElse: () => PracticeTool.breathing,
+  );
 }
 
 /// Presentation metadata for the decision-engine actions (`what_to_do`).
@@ -145,32 +179,68 @@ class ActionStyle {
   static ActionStyle of(String action) {
     switch (action) {
       case 'box_breathing':
-        return const ActionStyle('Box breathing',
-            'Four slow counts in, hold, out, hold. Calms the nervous system fast.', Icons.air_rounded, PracticeTool.breathing);
+        return const ActionStyle(
+          'Box breathing',
+          'Four slow counts in, hold, out, hold. Calms the nervous system fast.',
+          Icons.air_rounded,
+          PracticeTool.breathing,
+        );
       case 'deep_work':
-        return const ActionStyle('Deep work',
-            'Protect a block of uninterrupted time while your mind is clear.', Icons.psychology_rounded, PracticeTool.focus);
+        return const ActionStyle(
+          'Deep work',
+          'Protect a block of uninterrupted time while your mind is clear.',
+          Icons.psychology_rounded,
+          PracticeTool.focus,
+        );
       case 'grounding':
-        return const ActionStyle('Grounding',
-            'Bring attention back to your senses to settle racing thoughts.', Icons.spa_rounded, PracticeTool.grounding);
+        return const ActionStyle(
+          'Grounding',
+          'Bring attention back to your senses to settle racing thoughts.',
+          Icons.spa_rounded,
+          PracticeTool.grounding,
+        );
       case 'sound_therapy':
-        return const ActionStyle('Sound therapy',
-            'Let calming ambience slow things down before rest.', Icons.headphones_rounded, PracticeTool.sound);
+        return const ActionStyle(
+          'Sound therapy',
+          'Let calming ambience slow things down before rest.',
+          Icons.headphones_rounded,
+          PracticeTool.sound,
+        );
       case 'movement':
-        return const ActionStyle('Movement',
-            'A short walk or stretch to discharge restless energy.', Icons.directions_walk_rounded, PracticeTool.grounding);
+        return const ActionStyle(
+          'Movement',
+          'A short walk or stretch to discharge restless energy.',
+          Icons.directions_walk_rounded,
+          PracticeTool.grounding,
+        );
       case 'journaling':
-        return const ActionStyle('Journaling',
-            'Write it out to untangle feelings that pull different ways.', Icons.edit_note_rounded, PracticeTool.grounding);
+        return const ActionStyle(
+          'Journaling',
+          'Write it out to untangle feelings that pull different ways.',
+          Icons.edit_note_rounded,
+          PracticeTool.grounding,
+        );
       case 'rest':
-        return const ActionStyle('Rest',
-            'Your energy is low. Step away and recharge before pushing on.', Icons.bedtime_rounded, PracticeTool.grounding);
+        return const ActionStyle(
+          'Rest',
+          'Your energy is low. Step away and recharge before pushing on.',
+          Icons.bedtime_rounded,
+          PracticeTool.grounding,
+        );
       case 'light_planning':
-        return const ActionStyle('Light planning',
-            'Sketch a few gentle next steps without committing to everything.', Icons.checklist_rounded, PracticeTool.grounding);
+        return const ActionStyle(
+          'Light planning',
+          'Sketch a few gentle next steps without committing to everything.',
+          Icons.checklist_rounded,
+          PracticeTool.grounding,
+        );
       default:
-        return ActionStyle(_titleCase(action), 'A small step to support your current state.',
-            Icons.lightbulb_outline_rounded, PracticeTool.grounding);
+        return ActionStyle(
+          _titleCase(action),
+          'A small step to support your current state.',
+          Icons.lightbulb_outline_rounded,
+          PracticeTool.grounding,
+        );
     }
   }
 

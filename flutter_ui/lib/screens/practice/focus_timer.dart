@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
 
@@ -65,13 +67,17 @@ class _FocusTimerState extends State<FocusTimer> {
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
-    final color = EmotionStyle.focused.color(context);
-    final elapsed = _totalSeconds > 0 ? 1 - (_remainingSeconds / _totalSeconds) : 0.0;
+    final color = p.brand;
+    final elapsed = _totalSeconds > 0
+        ? 1 - (_remainingSeconds / _totalSeconds)
+        : 0.0;
 
     return Column(
       children: [
         Text(
-          _finished ? 'Sprint complete' : (_isRunning ? 'In the zone' : 'Choose a sprint length'),
+          _finished
+              ? 'Sprint complete'
+              : (_isRunning ? 'In the zone' : 'Choose a sprint length'),
           style: context.text.headlineSmall,
         ),
         const SizedBox(height: EmoSpace.xxs),
@@ -91,7 +97,6 @@ class _FocusTimerState extends State<FocusTimer> {
               EmoChip(
                 label: '$m min',
                 selected: _totalSeconds == m * 60,
-                color: color,
                 onTap: () => _reset(m),
               ),
           ],
@@ -126,11 +131,18 @@ class _FocusTimerState extends State<FocusTimer> {
                       if (_finished)
                         Icon(Icons.check_rounded, size: 56, color: color)
                       else
-                        Text(_format(_remainingSeconds), style: context.text.displayMedium?.tabular),
+                        Text(
+                          _format(_remainingSeconds),
+                          style: context.text.displayMedium?.tabular,
+                        ),
                       const SizedBox(height: 4),
                       Text(
-                        _finished ? 'Done' : (_isRunning ? 'Focusing' : 'Paused'),
-                        style: context.text.labelMedium?.copyWith(color: p.textTertiary),
+                        _finished
+                            ? 'Done'
+                            : (_isRunning ? 'Focusing' : 'Paused'),
+                        style: context.text.labelMedium?.copyWith(
+                          color: p.textTertiary,
+                        ),
                       ),
                     ],
                   ),
@@ -144,14 +156,23 @@ class _FocusTimerState extends State<FocusTimer> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (_finished)
-              EmoButton(label: 'Start another', icon: Icons.replay_rounded, color: color, onPressed: () => _reset())
+              EmoButton(
+                label: 'Start another',
+                icon: Icons.replay_rounded,
+                onPressed: () => _reset(),
+              )
             else if (_isRunning)
-              EmoButton.secondary(label: 'Pause', icon: Icons.pause_rounded, onPressed: _toggle)
+              EmoButton.secondary(
+                label: 'Pause',
+                icon: Icons.pause_rounded,
+                onPressed: _toggle,
+              )
             else
               EmoButton(
-                label: _remainingSeconds < _totalSeconds ? 'Resume' : 'Start sprint',
+                label: _remainingSeconds < _totalSeconds
+                    ? 'Resume'
+                    : 'Start sprint',
                 icon: Icons.play_arrow_rounded,
-                color: color,
                 onPressed: _toggle,
               ),
             if (!_finished && _remainingSeconds < _totalSeconds) ...[

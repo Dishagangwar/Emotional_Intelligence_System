@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+
 import '../models/prediction_result.dart';
 import '../services/data_repository.dart';
 import '../theme/app_theme.dart';
@@ -74,7 +76,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
     final q = _searchQuery.toLowerCase();
     setState(() {
       _filtered = _allPredictions.where((item) {
-        final matchesQuery = q.isEmpty ||
+        final matchesQuery =
+            q.isEmpty ||
             item.id.toString().contains(q) ||
             item.whatToDo.toLowerCase().contains(q) ||
             item.whatToDo.replaceAll('_', ' ').toLowerCase().contains(q) ||
@@ -82,7 +85,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
             (_journalById[item.id]?.toLowerCase().contains(q) ?? false);
 
         final matchesEmotion =
-            _selectedEmotion == 'all' || item.predictedState.toLowerCase() == _selectedEmotion;
+            _selectedEmotion == 'all' ||
+            item.predictedState.toLowerCase() == _selectedEmotion;
 
         final matchesUncertain = !_onlyUncertain || item.uncertainFlag == 1;
 
@@ -103,11 +107,16 @@ class _InsightsScreenState extends State<InsightsScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final side = math.max(EmoSpace.gutter, (constraints.maxWidth - EmoSpace.maxContentWidth) / 2);
+        final side = math.max(
+          EmoSpace.gutter,
+          (constraints.maxWidth - EmoSpace.maxContentWidth) / 2,
+        );
         final pad = EdgeInsets.symmetric(horizontal: side);
 
         return CustomScrollView(
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           slivers: [
             SliverPadding(
@@ -122,7 +131,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
             ),
             const SliverToBoxAdapter(child: SizedBox(height: EmoSpace.lg)),
             ..._content(pad),
-            const SliverToBoxAdapter(child: SizedBox(height: EmoSpace.navClearance)),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: EmoSpace.navClearance),
+            ),
           ],
         );
       },
@@ -140,9 +151,13 @@ class _InsightsScreenState extends State<InsightsScreen> {
               children: [
                 Row(
                   children: [
-                    Expanded(child: SkeletonBox(height: 84, radius: EmoRadius.lg)),
+                    Expanded(
+                      child: SkeletonBox(height: 84, radius: EmoRadius.lg),
+                    ),
                     SizedBox(width: EmoSpace.xs),
-                    Expanded(child: SkeletonBox(height: 84, radius: EmoRadius.lg)),
+                    Expanded(
+                      child: SkeletonBox(height: 84, radius: EmoRadius.lg),
+                    ),
                   ],
                 ),
                 SizedBox(height: EmoSpace.md),
@@ -195,14 +210,18 @@ class _InsightsScreenState extends State<InsightsScreen> {
     final p = context.emo;
     final countByState = <String, int>{};
     for (final pr in _allPredictions) {
-      countByState[pr.predictedState.toLowerCase()] = (countByState[pr.predictedState.toLowerCase()] ?? 0) + 1;
+      countByState[pr.predictedState.toLowerCase()] =
+          (countByState[pr.predictedState.toLowerCase()] ?? 0) + 1;
     }
-    final hasFilters = _searchQuery.isNotEmpty || _selectedEmotion != 'all' || _onlyUncertain;
+    final hasFilters =
+        _searchQuery.isNotEmpty || _selectedEmotion != 'all' || _onlyUncertain;
 
     return [
       SliverPadding(
         padding: pad,
-        sliver: SliverToBoxAdapter(child: InsightsOverview(predictions: _allPredictions)),
+        sliver: SliverToBoxAdapter(
+          child: InsightsOverview(predictions: _allPredictions),
+        ),
       ),
       const SliverToBoxAdapter(child: SizedBox(height: EmoSpace.xl)),
       SliverPadding(
@@ -244,7 +263,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                 const SizedBox(width: EmoSpace.xs),
                 EmoChip(
                   label: s.label,
-                  color: s.color(context),
+                  dot: s.color(context),
                   selected: _selectedEmotion == s.id,
                   trailing: '${countByState[s.id] ?? 0}',
                   onTap: () {
@@ -259,7 +278,6 @@ class _InsightsScreenState extends State<InsightsScreen> {
               EmoChip(
                 label: 'Low confidence',
                 icon: Icons.help_outline_rounded,
-                color: p.caution,
                 selected: _onlyUncertain,
                 onTap: () {
                   _onlyUncertain = !_onlyUncertain;
@@ -280,7 +298,11 @@ class _InsightsScreenState extends State<InsightsScreen> {
                 style: context.text.labelMedium?.tabular,
               ),
               const Spacer(),
-              if (hasFilters) EmoButton.ghost(label: 'Clear filters', onPressed: _clearFilters),
+              if (hasFilters)
+                EmoButton.ghost(
+                  label: 'Clear filters',
+                  onPressed: _clearFilters,
+                ),
             ],
           ),
         ),
@@ -328,9 +350,9 @@ class _SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.emo;
     OutlineInputBorder border(Color c) => OutlineInputBorder(
-          borderRadius: BorderRadius.circular(EmoRadius.md),
-          borderSide: BorderSide(color: c),
-        );
+      borderRadius: BorderRadius.circular(EmoRadius.md),
+      borderSide: BorderSide(color: c),
+    );
 
     return TextField(
       controller: controller,
@@ -348,7 +370,11 @@ class _SearchField extends StatelessWidget {
               ? const SizedBox.shrink()
               : IconButton(
                   tooltip: 'Clear search',
-                  icon: Icon(Icons.close_rounded, size: 18, color: p.textTertiary),
+                  icon: Icon(
+                    Icons.close_rounded,
+                    size: 18,
+                    color: p.textTertiary,
+                  ),
                   onPressed: () {
                     controller.clear();
                     onChanged('');
@@ -357,7 +383,10 @@ class _SearchField extends StatelessWidget {
         ),
         filled: true,
         fillColor: p.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: EmoSpace.md, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: EmoSpace.md,
+          vertical: 14,
+        ),
         border: border(p.border),
         enabledBorder: border(p.border),
         focusedBorder: border(p.brand),

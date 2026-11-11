@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../theme/app_theme.dart';
 import 'emo_button.dart';
 
@@ -15,19 +16,29 @@ class StateBadge extends StatelessWidget {
     final color = style.color(context);
     final p = context.emo;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: dense ? 8 : 10, vertical: dense ? 3 : 5),
+      padding: EdgeInsets.symmetric(
+        horizontal: dense ? 8 : 10,
+        vertical: dense ? 3 : 5,
+      ),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: p.isDark ? 0.14 : 0.1),
+        color: p.surfaceRaised,
         borderRadius: BorderRadius.circular(EmoRadius.pill),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(width: 6, height: 6, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+          Container(
+            width: 6,
+            height: 6,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
           const SizedBox(width: 6),
           Text(
             style.label,
-            style: context.text.labelMedium?.copyWith(color: color, fontSize: dense ? 12 : 13),
+            style: context.text.labelMedium?.copyWith(
+              color: p.textPrimary,
+              fontSize: dense ? 12 : 13,
+            ),
           ),
         ],
       ),
@@ -69,7 +80,10 @@ class InlineNotice extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: context.text.titleSmall?.copyWith(color: color)),
+                Text(
+                  title,
+                  style: context.text.titleSmall?.copyWith(color: color),
+                ),
                 const SizedBox(height: 2),
                 Text(message, style: context.text.bodySmall),
               ],
@@ -102,7 +116,10 @@ class EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.emo;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: EmoSpace.xxl, horizontal: EmoSpace.lg),
+      padding: const EdgeInsets.symmetric(
+        vertical: EmoSpace.xxl,
+        horizontal: EmoSpace.lg,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -117,12 +134,24 @@ class EmptyState extends StatelessWidget {
             child: Icon(icon, size: 28, color: p.textTertiary),
           ),
           const SizedBox(height: EmoSpace.md),
-          Text(title, style: context.text.titleMedium, textAlign: TextAlign.center),
+          Text(
+            title,
+            style: context.text.titleMedium,
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: EmoSpace.xxs),
-          Text(message, style: context.text.bodySmall, textAlign: TextAlign.center),
+          Text(
+            message,
+            style: context.text.bodySmall,
+            textAlign: TextAlign.center,
+          ),
           if (actionLabel != null && onAction != null) ...[
             const SizedBox(height: EmoSpace.md),
-            EmoButton.secondary(label: actionLabel!, onPressed: onAction, compact: true),
+            EmoButton.secondary(
+              label: actionLabel!,
+              onPressed: onAction,
+              compact: true,
+            ),
           ],
         ],
       ),
@@ -136,13 +165,21 @@ class ErrorState extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;
 
-  const ErrorState({super.key, required this.title, required this.message, this.onRetry});
+  const ErrorState({
+    super.key,
+    required this.title,
+    required this.message,
+    this.onRetry,
+  });
 
   @override
   Widget build(BuildContext context) {
     final p = context.emo;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: EmoSpace.xl, horizontal: EmoSpace.md),
+      padding: const EdgeInsets.symmetric(
+        vertical: EmoSpace.xl,
+        horizontal: EmoSpace.md,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -156,12 +193,25 @@ class ErrorState extends StatelessWidget {
             child: Icon(Icons.error_outline_rounded, color: p.danger, size: 26),
           ),
           const SizedBox(height: EmoSpace.md),
-          Text(title, style: context.text.titleMedium, textAlign: TextAlign.center),
+          Text(
+            title,
+            style: context.text.titleMedium,
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: EmoSpace.xxs),
-          Text(message, style: context.text.bodySmall, textAlign: TextAlign.center),
+          Text(
+            message,
+            style: context.text.bodySmall,
+            textAlign: TextAlign.center,
+          ),
           if (onRetry != null) ...[
             const SizedBox(height: EmoSpace.md),
-            EmoButton.secondary(label: 'Try again', icon: Icons.refresh_rounded, onPressed: onRetry, compact: true),
+            EmoButton.secondary(
+              label: 'Try again',
+              icon: Icons.refresh_rounded,
+              onPressed: onRetry,
+              compact: true,
+            ),
           ],
         ],
       ),
@@ -175,15 +225,23 @@ class SkeletonBox extends StatefulWidget {
   final double height;
   final double radius;
 
-  const SkeletonBox({super.key, this.width, required this.height, this.radius = EmoRadius.md});
+  const SkeletonBox({
+    super.key,
+    this.width,
+    required this.height,
+    this.radius = EmoRadius.md,
+  });
 
   @override
   State<SkeletonBox> createState() => _SkeletonBoxState();
 }
 
-class _SkeletonBoxState extends State<SkeletonBox> with SingleTickerProviderStateMixin {
-  late final AnimationController _c =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: 1400))..repeat();
+class _SkeletonBoxState extends State<SkeletonBox>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  )..repeat();
 
   @override
   void dispose() {
@@ -195,7 +253,9 @@ class _SkeletonBoxState extends State<SkeletonBox> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     final p = context.emo;
     final base = p.surfaceRaised;
-    final shine = p.isDark ? Colors.white.withValues(alpha: 0.06) : Colors.white.withValues(alpha: 0.7);
+    final shine = p.isDark
+        ? Colors.white.withValues(alpha: 0.06)
+        : Colors.white.withValues(alpha: 0.7);
     return AnimatedBuilder(
       animation: _c,
       builder: (context, _) {

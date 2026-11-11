@@ -11,16 +11,20 @@ void main() {
     expect(find.text('Emostate'), findsOneWidget);
   });
 
-  test('IntelligenceEngine predicts high stress as overwhelmed or restless', () {
-    const input = ReflectionInput(
-      journalText: "I feel like everything is piled up and I have too much pressure.",
-      stressLevel: 5,
-      energyLevel: 2,
-    );
-    final result = IntelligenceEngine.predict(input);
-    expect(result.predictedIntensity, greaterThanOrEqualTo(4));
-    expect(result.whatToDo, equals('box_breathing'));
-  });
+  test(
+    'IntelligenceEngine predicts high stress as overwhelmed or restless',
+    () {
+      const input = ReflectionInput(
+        journalText:
+            "I feel like everything is piled up and I have too much pressure.",
+        stressLevel: 5,
+        energyLevel: 2,
+      );
+      final result = IntelligenceEngine.predict(input);
+      expect(result.predictedIntensity, greaterThanOrEqualTo(4));
+      expect(result.whatToDo, equals('box_breathing'));
+    },
+  );
 
   test('IntelligenceEngine predicts focus and recommends deep work', () {
     const input = ReflectionInput(
