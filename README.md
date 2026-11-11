@@ -101,6 +101,14 @@ Key failure cases:
 
 ## ⚙️ How to Run
 
+### 1. Python ML Pipeline
 ```bash
 pip install -r requirements.txt
 python main.py
+```
+
+### 2. Modern Flutter & Dart UI
+```bash
+cd flutter_ui
+flutter run
+```
