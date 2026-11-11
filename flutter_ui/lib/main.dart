@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
+import 'services/backend.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Backend.init();
   runApp(const EmotionalIntelligenceApp());
 }
 

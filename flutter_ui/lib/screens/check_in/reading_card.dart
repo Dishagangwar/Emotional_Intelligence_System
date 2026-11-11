@@ -4,6 +4,8 @@ import '../../models/prediction_result.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/ui/ui.dart';
 
+enum SaveStatus { idle, saving, saved }
+
 /// Presents a [PredictionResult] from the intelligence engine as a compact,
 /// data-first summary: state, key metrics, full probability breakdown and
 /// the recommended next step.
@@ -14,6 +16,11 @@ class ReadingCard extends StatelessWidget {
   final VoidCallback onRetry;
   final ValueChanged<PracticeTool>? onStartPractice;
 
+  /// Saves this reading to the user's history. `null` hides the action
+  /// (e.g. cloud sync not configured).
+  final VoidCallback? onSave;
+  final SaveStatus saveStatus;
+
   const ReadingCard({
     super.key,
     required this.result,
@@ -21,6 +28,8 @@ class ReadingCard extends StatelessWidget {
     required this.error,
     required this.onRetry,
     this.onStartPractice,
+    this.onSave,
+    this.saveStatus = SaveStatus.idle,
   });
 
   @override
@@ -276,6 +285,26 @@ class ReadingCard extends StatelessWidget {
                       icon: Icons.play_arrow_rounded,
                       expand: true,
                       onPressed: () => onStartPractice!(action.practice),
+                    ),
+                  ],
+                  if (onSave != null) ...[
+                    const SizedBox(height: EmoSpace.xs),
+                    Center(
+                      child: EmoButton.ghost(
+                        label: switch (saveStatus) {
+                          SaveStatus.idle => 'Save to history',
+                          SaveStatus.saving => 'Saving…',
+                          SaveStatus.saved => 'Saved to history',
+                        },
+                        icon: switch (saveStatus) {
+                          SaveStatus.saved =>
+                            Icons.check_circle_outline_rounded,
+                          _ => Icons.bookmark_add_outlined,
+                        },
+                        onPressed: saveStatus == SaveStatus.idle && !isAnalyzing
+                            ? onSave
+                            : null,
+                      ),
                     ),
                   ],
                 ],
