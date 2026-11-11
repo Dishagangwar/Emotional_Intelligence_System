@@ -7,8 +7,20 @@ import '../config/supabase_config.dart';
 /// not configured or failed to start.
 abstract final class Backend {
   static bool _ready = false;
+  static Object? _initError;
 
   static bool get isAvailable => _ready;
+
+  /// Why cloud sync is off, for the in-app explanation.
+  static String get offlineReason {
+    if (!SupabaseConfig.isConfigured) {
+      return 'This build was made without a Supabase key, so accounts and history are turned off. '
+          'Rebuild with --dart-define-from-file=supabase.json, for example:\n\n'
+          'flutter build apk --release --dart-define-from-file=supabase.json';
+    }
+    return 'Cloud sync could not start${_initError != null ? ' ($_initError)' : ''}. '
+        'Check your connection and restart the app.';
+  }
 
   static SupabaseClient get client => Supabase.instance.client;
 
@@ -22,8 +34,9 @@ abstract final class Backend {
         publishableKey: SupabaseConfig.publishableKey,
       );
       _ready = true;
-    } catch (_) {
+    } catch (e) {
       _ready = false;
+      _initError = e;
     }
   }
 }

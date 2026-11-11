@@ -193,15 +193,39 @@ class _BrandHeader extends StatelessWidget {
   }
 }
 
-/// Avatar button in the header; opens the account sheet. Hidden when cloud
-/// sync isn't configured.
+/// Avatar button in the header; opens the account sheet (or, when cloud sync
+/// is off, an explanation of why).
 class _AccountButton extends StatelessWidget {
   const _AccountButton();
 
   @override
   Widget build(BuildContext context) {
-    if (!Backend.isAvailable) return const SizedBox.shrink();
     final p = context.emo;
+    // Always visible: when cloud sync is off this explains why, instead of
+    // silently hiding sign-in.
+    if (!Backend.isAvailable) {
+      return Padding(
+        padding: const EdgeInsets.only(left: EmoSpace.xs),
+        child: Pressable(
+          onTap: () => showAccountSheet(context),
+          semanticLabel: 'Cloud sync is off',
+          child: Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: p.surface,
+              shape: BoxShape.circle,
+              border: Border.all(color: p.border),
+            ),
+            child: Icon(
+              Icons.cloud_off_outlined,
+              size: 18,
+              color: p.textTertiary,
+            ),
+          ),
+        ),
+      );
+    }
     return StreamBuilder(
       stream: AuthService.changes,
       builder: (context, _) {
