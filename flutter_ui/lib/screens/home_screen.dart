@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../services/auth_service.dart';
+import '../services/backend.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui/ui.dart';
+import 'account/account_sheet.dart';
 import 'check_in_screen.dart';
 import 'insights_screen.dart';
 import 'practice_screen.dart';
@@ -182,9 +185,60 @@ class _BrandHeader extends StatelessWidget {
                 ),
               ),
             ),
+            const _AccountButton(),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Avatar button in the header; opens the account sheet. Hidden when cloud
+/// sync isn't configured.
+class _AccountButton extends StatelessWidget {
+  const _AccountButton();
+
+  @override
+  Widget build(BuildContext context) {
+    if (!Backend.isAvailable) return const SizedBox.shrink();
+    final p = context.emo;
+    return StreamBuilder(
+      stream: AuthService.changes,
+      builder: (context, _) {
+        final user = AuthService.currentUser;
+        final initial = (user?.email?.isNotEmpty ?? false)
+            ? user!.email![0].toUpperCase()
+            : null;
+        return Padding(
+          padding: const EdgeInsets.only(left: EmoSpace.xs),
+          child: Pressable(
+            onTap: () => showAccountSheet(context),
+            semanticLabel: user == null ? 'Sign in' : 'Account',
+            child: Container(
+              width: 34,
+              height: 34,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: initial != null ? p.brand : p.surface,
+                shape: BoxShape.circle,
+                border: initial != null ? null : Border.all(color: p.border),
+              ),
+              child: initial != null
+                  ? Text(
+                      initial,
+                      style: context.text.labelLarge?.copyWith(
+                        color: p.onAccent,
+                      ),
+                    )
+                  : Icon(
+                      Icons.person_outline_rounded,
+                      size: 19,
+                      color: p.textSecondary,
+                    ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

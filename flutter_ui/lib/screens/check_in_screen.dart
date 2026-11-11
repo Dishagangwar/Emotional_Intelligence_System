@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../models/prediction_result.dart';
 import '../models/reflection_input.dart';
+import '../services/auth_service.dart';
+import '../services/backend.dart';
+import '../services/check_in_repository.dart';
 import '../services/intelligence_engine.dart';
 import '../theme/app_theme.dart' show EmoSpace;
 import '../widgets/ui/ui.dart';
+import 'account/account_sheet.dart';
 import 'check_in/context_panel.dart';
 import 'check_in/example_sheet.dart';
 import 'check_in/journal_card.dart';
@@ -43,6 +47,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
   String? _error;
   bool _isAnalyzing = false;
   Timer? _debounceTimer;
+  SaveStatus _saveStatus = SaveStatus.idle;
 
   @override
   void initState() {
@@ -76,6 +81,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
         _currentResult = res;
         _error = null;
         _isAnalyzing = false;
+        _saveStatus = SaveStatus.idle;
       });
       widget.onEmotionChanged?.call(res.predictedState);
     } catch (e) {
@@ -121,6 +127,39 @@ class _CheckInScreenState extends State<CheckInScreen> {
   void _update(VoidCallback change) {
     setState(change);
     _runAnalysis();
+  }
+
+  /// Saves the current input + reading to the user's Supabase history,
+  /// asking them to sign in first if needed.
+  Future<void> _save() async {
+    final result = _currentResult;
+    if (result == null || _isAnalyzing) return;
+    if (_textController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Write a few words before saving.')),
+      );
+      return;
+    }
+    if (!AuthService.isSignedIn) {
+      final signedIn = await showAccountSheet(
+        context,
+        reason: 'Sign in to save this check-in to your history.',
+      );
+      if (!signedIn || !mounted) return;
+    }
+    final input = _buildInput();
+    setState(() => _saveStatus = SaveStatus.saving);
+    try {
+      await CheckInRepository.save(input, result);
+      if (!mounted) return;
+      setState(() => _saveStatus = SaveStatus.saved);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _saveStatus = SaveStatus.idle);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(CheckInRepository.describeError(e))),
+      );
+    }
   }
 
   Future<void> _openExamples() async {
@@ -209,6 +248,8 @@ class _CheckInScreenState extends State<CheckInScreen> {
               isAnalyzing: _isAnalyzing,
               error: _error,
               onRetry: () => _runAnalysis(immediate: true),
+              onSave: Backend.isAvailable ? _save : null,
+              saveStatus: _saveStatus,
               onStartPractice: widget.onNavigateToTool == null
                   ? null
                   : (tool) => widget.onNavigateToTool!(tool.id),
