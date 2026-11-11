@@ -4,9 +4,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../models/prediction_result.dart';
+import '../services/backend.dart';
 import '../services/data_repository.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui/ui.dart';
+import 'insights/history_section.dart';
 import 'insights/insights_overview.dart';
 import 'insights/prediction_tile.dart';
 
@@ -30,6 +32,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
   String _searchQuery = '';
   String _selectedEmotion = 'all';
   bool _onlyUncertain = false;
+
+  /// true = My history (cloud), false = Model performance.
+  bool _showHistory = Backend.isAvailable;
 
   @override
   void initState() {
@@ -121,16 +126,31 @@ class _InsightsScreenState extends State<InsightsScreen> {
           slivers: [
             SliverPadding(
               padding: pad.copyWith(top: EmoSpace.xs),
-              sliver: const SliverToBoxAdapter(
+              sliver: SliverToBoxAdapter(
                 child: PageHeader(
                   eyebrow: 'Insights',
-                  title: 'Model insights',
-                  subtitle: 'Predictions from the trained XGBoost model on the held-out test set.',
+                  title: _showHistory ? 'Your history' : 'Model insights',
+                  subtitle: _showHistory
+                      ? 'Your saved check-ins and how your state changes over time.'
+                      : 'Predictions from the trained XGBoost model on the held-out test set.',
                 ),
               ),
             ),
+            if (Backend.isAvailable)
+              SliverPadding(
+                padding: pad.copyWith(top: EmoSpace.md),
+                sliver: SliverToBoxAdapter(
+                  child: _ViewSwitch(
+                    showHistory: _showHistory,
+                    onChanged: (v) => setState(() => _showHistory = v),
+                  ),
+                ),
+              ),
             const SliverToBoxAdapter(child: SizedBox(height: EmoSpace.lg)),
-            ..._content(pad),
+            if (_showHistory)
+              HistorySection(padding: pad)
+            else
+              ..._content(pad),
             const SliverToBoxAdapter(
               child: SizedBox(height: EmoSpace.navClearance),
             ),
@@ -390,6 +410,68 @@ class _SearchField extends StatelessWidget {
         border: border(p.border),
         enabledBorder: border(p.border),
         focusedBorder: border(p.brand),
+      ),
+    );
+  }
+}
+
+/// Two-segment control: My history | Model performance.
+class _ViewSwitch extends StatelessWidget {
+  final bool showHistory;
+  final ValueChanged<bool> onChanged;
+
+  const _ViewSwitch({required this.showHistory, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.emo;
+    Widget segment(String label, bool value) {
+      final selected = showHistory == value;
+      return Expanded(
+        child: Pressable(
+          onTap: () => onChanged(value),
+          selected: selected,
+          semanticLabel: label,
+          child: AnimatedContainer(
+            duration: EmoMotion.fast,
+            height: 34,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: selected ? p.surface : Colors.transparent,
+              borderRadius: BorderRadius.circular(EmoRadius.sm),
+              boxShadow: selected
+                  ? const [
+                      BoxShadow(
+                        color: Color(0x140F172A),
+                        blurRadius: 4,
+                        offset: Offset(0, 1),
+                      ),
+                    ]
+                  : null,
+            ),
+            child: Text(
+              label,
+              style: context.text.labelMedium?.copyWith(
+                color: selected ? p.textPrimary : p.textSecondary,
+                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: p.surfaceSunken,
+        borderRadius: BorderRadius.circular(EmoRadius.md),
+      ),
+      child: Row(
+        children: [
+          segment('My history', true),
+          segment('Model performance', false),
+        ],
       ),
     );
   }
